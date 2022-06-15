@@ -1,0 +1,35 @@
+IK-Gazebo-v0:
+  env_wrapper:
+    - drl_grasping.envs.randomizers.ManipulationGazeboEnvRandomizer:
+        robot_random_joint_positions: False
+        invisible_world_bottom_collision_plane: False
+        visualise_workspace: False
+        visualise_spawn_volume: True
+  normalize: true
+  n_timesteps: !!float 5e4
+  policy: 'MlpPolicy'
+  ent_coef: .0
+
+REACH-WO-Gazebo-v0:
+  env_wrapper:
+    - drl_grasping.envs.randomizers.ManipulationGazeboEnvRandomizer:
+        robot_random_joint_positions: False
+        invisible_world_bottom_collision_plane: False
+        visualise_workspace: True
+        visualise_spawn_volume: True
+  normalize: true
+  n_timesteps: !!float 1e6
+  policy: 'MlpPolicy'
+  ent_coef: .0
+
+
+IK-WO-Gazebo-v0:
+  env_wrapper:
+    - drl_grasping.envs.randomizers.ManipulationGazeboEnvRandomizer:
+        robot_random_joint_positions: False
+        invisible_world_bottom_collision_plane: False
+        visualise_spawn_volume: True
+  normalize: true
+  n_timesteps: !!float 1e6
+  policy: 'MlpPolicy'
+  ent_coef: .0
