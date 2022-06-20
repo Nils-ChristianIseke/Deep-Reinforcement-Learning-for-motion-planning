@@ -1,5 +1,5 @@
 # Deep Reinforcement Learning for inverse Kinematics
-This repository is an extesion of: [drl_grasping](https://github.com/AndrejOrsula/drl_grasping). Please read through it's [README](https://github.com/AndrejOrsula/drl_grasping)
+This repository is an extesion of: [drl_grasping](https://github.com/AndrejOrsula/drl_grasping). Please read through it's [README](https://github.com/AndrejOrsula/drl_grasping). 
 
 
 In our Extension of the fantastic work of [AndrejOrsula](https://github.com/AndrejOrsula) we added new Environments:
@@ -19,7 +19,7 @@ The following animations are showing some results using the Panda robotic arm.
 </p>
 
 Disclaimer: These instruction are based on the [original Repository](https://github.com/AndrejOrsula) and were adjusted to the Extension we are providing.
-We added some parts and deleted others.
+We added some parts and deleted parts which are not relevant for our contribution.
 
 ## Instructions
 
@@ -29,8 +29,9 @@ We added some parts and deleted others.
 
 - **GPU:** CUDA is required to process octree observations on GPU.
   - Everything else should function normally on CPU, i.e. environments with other observation types.
-
-<details><summary>Docker (click to expand)</summary>
+- VS Code
+- Remote Containers
+<details><summary> Developing with Docker (click to expand)</summary>
 
 ### Requirements
 
@@ -64,59 +65,55 @@ docker pull andrejorsula/drl_grasping:latest
 
 For running of the container, please use the included [docker/run.bash](docker/run.bash) script that is included with this repo. It significantly simplifies the setup with volumes and allows use of graphical interfaces for Ignition Gazebo GUI client and RViZ.
 
+Open a Terminal and cd to the directory where the run.bash is located:
 ```bash
-<drl_grasping dir>/docker/run.bash andrejorsula/drl_grasping:latest /bin/bash
+  cd drl_grasping dir/docker
+  ```
+Execute run.bash:
+```bash
+./run.bash andrejorsula/drl_grasping:latest /bin/bash
 ```
 
-If desired, you can also run examples and scripts directly with this setup, e.g. enjoying of pre-trained agents discussed below.
+The easiest way to edit the code e.g.: changing the reward function, or adding new tasks, is by connecting VS-Code to the container:
+  1. Install [VS Code](https://code.visualstudio.com/download)
+  2. Install the VS Code Extension [Remote Containers](https://code.visualstudio.com/docs/remote/containers)
 
-```bash
-<drl_grasping dir>/docker/run.bash andrejorsula/drl_grasping:latest ros2 run drl_grasping ex_enjoy_pretrained_agent.bash
-```
-
-> If you are struggling to get CUDA working on your system with Nvidia GPU (no `nvidia-smi` output), you might need to use a different version of CUDA base image that supports the version of your driver. If that is the case, you need to build yourself a new Docker image.
-
-### Building a New Image
-
-[Dockerfile](docker/Dockerfile) is included with this repo but all source code is pulled from GitHub when building an image. There is nothing special about it, so just build it as any other Dockerfile (`docker build . -t ...`) and adjust arguments or the recipe itself if needed.
-
-</details>
-
-<details><summary>Debug Level (click to expand)</summary>
-
-### Debug Level
-
-Environment variable `DRL_GRASPING_DEBUG_LEVEL` can be set `DEBUG`/`INFO`/`WARN`/`ERROR`/`DISABLED` to affect the level of logging for environments.
-
-</details>
-
-<details><summary>Using Pre-trained Agents (click to expand)</summary>
-
-### Enjoy Pre-trained Agents
-
-The [pretrained_agents](https://github.com/AndrejOrsula/drl_grasping_pretrained_agents) submodule contains a selection of few agents that are already trained and ready to be enjoyed (remember to `git clone --recursive`/`git submodule update --init` if you wish to use these). To use them, you can use [`ex_enjoy_pretrained_agent.bash`](examples/ex_enjoy_pretrained_agent.bash). You should see RViZ 2 and Ignition Gazebo GUI client with an agent trying to grasp one of four objects in a fully randomised novel environment, while the performance of the agent is logged in your terminal.
-
-```bash
-ros2 run drl_grasping ex_enjoy_pretrained_agent.bash
-```
-
-The default agent is for `Grasp-OctreeWithColor-Gazebo-v0` environment with Panda robot and TQC. You can modify these to any of the other pre-trained agent directly in the example script according to the support matrix from [AndrejOrsula/drl_grasping_pretrained_agents](https://github.com/AndrejOrsula/drl_grasping_pretrained_agents).
-
-> Under the hood, all examples launch a setup ROS 2 script for interfacing MoveIt 2 and Ignition, and a corresponding Python script for enjoying or training. All examples print these commands out if you are interested in running the commands separately.
-
-</details>
-
+  Now you can start developing inside the container by:
+  1. Starting a container (As described above: 
+    
+    ```bash
+      cd drl_grasping dir/docker
+    ```
+    
+    ```bash
+      ./run.bash andrejorsula/drl_grasping:latest /bin/bash
+    ```)
+  2. Connecting to the container as described [here](https://code.visualstudio.com/docs/remote/containers)
+  3. cd to dlr_grasping:
+    
+  ```bash
+    cd /root/drl_grasping/drl_grasping/src/drl_grasping
+   ```
+  4. Start developing :) If you want another terminal e.g. for running tensorboard, open a new terminal and execute: 
+    ```bash
+      docker exec -ti container_id bash
+    ```
+    Where container_id is the id of the container, which is shown by executing:
+    ```bash
+      docker ps
+    ```
+  
+  
 <details><summary>Training New Agents (click to expand)</summary>
+
 
 ### Training of Agent
 
-To train your own agent, you can start with the [`ex_train.bash`](examples/ex_train.bash) example. You can customise this example script,  configuration of the environment and all hyperparameters to your needs (see below). By default, headless mode is used during training to reduce computational load. If you want to see what is going on, use `ign gazebo -g` or `ROS_DOMAIN_ID=69 rviz2` (`ROS_DOMAIN_ID=69` is default for Docker image).
+To train your own agent, you can start with the [`ex_train.bash`](examples/ex_train.bash) example. You can customise this example script,  configuration of the environment and all hyperparameters to your needs (see below). By default, headless mode is used during training to reduce computational load. If you want to see what is going on, you need to uncomment 'model.env.render("human")' in train.py (deepRLIK/scripts/train.py). 
 
 ```bash
 ros2 run drl_grasping ex_train.bash
 ```
-
-Depending on your hardware and hyperparameter configuration, the training can be a very lengthy process. It takes nearly three days to train an agent for 500k steps on a 130W laptop with a dedicated GPU.
 
 ### Enjoying of Trained Agents
 
@@ -126,6 +123,8 @@ To enjoy an agent that you have trained yourself, look into [`ex_enjoy.bash`](ex
 ros2 run drl_grasping ex_enjoy.bash
 ```
 
+</details>
+  
 </details>
 
 ## Environments
