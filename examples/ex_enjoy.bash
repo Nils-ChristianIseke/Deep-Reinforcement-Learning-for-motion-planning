@@ -13,7 +13,7 @@ SEED="77"
 # ENV_ID="Grasp-Octree-Gazebo-v0"
 # ENV_ID="Grasp-OctreeWithColor-Gazebo-v0"
 # ENV_ID="IK-WO-Gazebo-v0"
-ENV_ID="IK-WO-Gazebo-v1"
+ENV_ID="IK-Gazebo-v0"
 
 ## Robot model
 ROBOT_MODEL="panda"
@@ -24,7 +24,8 @@ ROBOT_MODEL="panda"
 # ALGO="sac"
 # ALGO="td3"
 #ALGO="tqc"
-ALGO="a2c"
+# ALGO="a2c"
+ALGO="ppo"
 ## Arguments for the environment
 ENV_ARGS="robot_model:\"${ROBOT_MODEL}\""
 

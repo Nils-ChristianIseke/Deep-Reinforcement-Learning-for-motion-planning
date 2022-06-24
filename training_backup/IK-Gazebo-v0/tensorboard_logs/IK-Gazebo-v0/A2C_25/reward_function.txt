@@ -1,0 +1,26 @@
+def get_reward(self) -> Reward:
+
+        reward = 0.0
+
+        # Compute the current distance to the target
+        current_distance = self.get_distance_to_target()
+
+        # Mark the episode done if target is reached
+        if current_distance < self._required_accuracy:
+            self._is_done = True
+            reward += 1.0
+            # if self._sparse_reward:
+            #     reward += 1.0
+
+        # Give reward based on how much closer robot got relative to the target for dense reward
+        if not self._sparse_reward:
+            reward += self._previous_distance - current_distance
+            self._previous_distance = current_distance
+
+        # Subtract a small reward each step to provide incentive to act quickly (if enabled)
+        reward -= self._act_quick_reward
+
+        if self._verbose:
+            print(f"reward: {reward}")
+
+        return Reward(reward)

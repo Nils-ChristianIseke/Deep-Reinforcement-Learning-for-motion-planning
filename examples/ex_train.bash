@@ -15,7 +15,7 @@ SEED="42"
 #ENV_ID="IK-Gazebo-v0"
 # ENV_ID="IK-WO-Gazebo-v0"
 #ENV_ID="IK-WO-Gazebo-v1"
-ENV_ID="REACH-WO-Gazebo-v0"
+ENV_ID="IK-Gazebo-v0"
 
 ## Robot model
 ROBOT_MODEL="panda"
@@ -23,13 +23,14 @@ ROBOT_MODEL="panda"
 # ROBOT_MODEL="kinova_j2s7s300"
 
 ## Algorithm to use
-# ALGO="sac"
-# ALGO="td3"
-# ALGO="tqc"
-# ALGO="ppo"
-ALGO="a2c"
+
+#ALGO="tqc"
+#ALGO="sac"
+ALGO="td3"
+#ALGO="ppo"
+#ALGO="a2c"
 ## Path to trained agent (to continue training)
-# TRAINED_AGENT=""${ENV_ID}"_1/rl_model_980000_steps.zip"
+TRAINED_AGENT=""${ENV_ID}"_1/rl_model_120000_steps.zip"
 
 ## Path to a replay buffer that should be preloaded before training begins
 # PRELOAD_REPLAY_BUFFER="training/preloaded_buffers/"${ENV_ID}"_1/replay_buffer.pkl"

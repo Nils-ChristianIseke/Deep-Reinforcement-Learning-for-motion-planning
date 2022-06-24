@@ -27,11 +27,11 @@ class InverseKinematics(Manipulation, abc.ABC):
     _object_spawn_centre: Tuple[float, float, float] = \
         (0.4,
          0,
-         0.2)
+         0.3)
     _object_spawn_volume: Tuple[float, float, float] = \
         (0.3,
          0.3,
-         0.3)
+         0.1)
     
     _obstacle_enable: bool =False
     _ground_enable:bool = False
@@ -70,18 +70,20 @@ class InverseKinematics(Manipulation, abc.ABC):
         # 0:7 Joint_angles
         
         joint_limits = Panda.get_joint_limits()
-        joint_limits_lower = [limit[0] for limit in joint_limits]
-        joint_limits_upper = [limit[1] for limit in joint_limits]
-
+        joint_limits_lower = np.array([limit[0] for limit in joint_limits[:-2]])
+        joint_limits_upper = np.array([limit[1] for limit in joint_limits[:-2]])
+        
+        print(joint_limits)
+        
+        print(joint_limits_lower)
         # FIX IF TIME: 
         # If individual joint_limits are specified following error is thrown --> Investigate if there is time
         # file "/usr/local/lib/python3.8/dist-packages/gym/spaces/box.py", line 69, in __init__
         # low_precision = _get_precision(self.low.dtype)
         # AttributeError: 'list' object has no attribute 'dtype
     
-        return gym.spaces.Box(low=min(joint_limits_lower),
-                              high=max(joint_limits_upper),
-                              shape=(7,),
+        return gym.spaces.Box(low=joint_limits_lower,
+                              high=joint_limits_upper,
                               dtype=np.float32)
 
     def create_observation_space(self) -> ObservationSpace:
@@ -99,7 +101,7 @@ class InverseKinematics(Manipulation, abc.ABC):
             print(f"action: {action}")
         
         # Set joint_angles
-        self.set_jointangles([float(joint_angle)for joint_angle in action])
+        self.set_jointangles(action)
 
         # Plan and execute motion to joint_angles
         self.moveit2.plan_kinematic_path(allowed_planning_time=0.1)
@@ -131,18 +133,20 @@ class InverseKinematics(Manipulation, abc.ABC):
         # Mark the episode done if target is reached
         if current_distance < self._required_accuracy:
             self._is_done = True
-            reward += 1.0
+            reward += 1/(current_distance)**2
             # if self._sparse_reward:
             #     reward += 1.0
 
         # Give reward based on how much closer robot got relative to the target for dense reward
         if not self._sparse_reward:
-            reward += self._previous_distance - current_distance
+            reward += min(1/(current_distance)**2,1/(self._required_accuracy)**2)
+            
             self._previous_distance = current_distance
 
         # Subtract a small reward each step to provide incentive to act quickly (if enabled)
         reward -= self._act_quick_reward
-
+        print(current_distance)
+        print(reward)
         if self._verbose:
             print(f"reward: {reward}")
 
@@ -182,5 +186,4 @@ class InverseKinematics(Manipulation, abc.ABC):
     def get_target_position(self) -> Tuple[float, float, float]:
 
         target_object = self.world.get_model(self.object_names[0]).to_gazebo()
-        print(target_object.get_link(link_name=target_object.link_names()[0]).position())
         return target_object.get_link(link_name=target_object.link_names()[0]).position()

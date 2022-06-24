@@ -1,0 +1,39 @@
+!!python/object/apply:collections.OrderedDict
+- - - batch_size
+    - 32
+  - - buffer_size
+    - 25000
+  - - ent_coef
+    - auto_0.1
+  - - env_wrapper
+    - - drl_grasping.envs.randomizers.ManipulationGazeboEnvRandomizer:
+          invisible_world_bottom_collision_plane: false
+          robot_random_joint_positions: false
+          visualise_spawn_volume: true
+          visualise_workspace: false
+  - - gamma
+    - 0.95
+  - - gradient_steps
+    - 1
+  - - learning_rate
+    - lin_0.0003
+  - - learning_starts
+    - 0
+  - - n_timesteps
+    - 1000000.0
+  - - noise_std
+    - 0.025
+  - - noise_type
+    - normal
+  - - optimize_memory_usage
+    - true
+  - - policy
+    - MlpPolicy
+  - - target_entropy
+    - auto
+  - - tau
+    - 0.01
+  - - top_quantiles_to_drop_per_net
+    - 2
+  - - train_freq
+    - 1

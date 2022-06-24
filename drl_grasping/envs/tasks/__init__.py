@@ -209,9 +209,9 @@ register(
             'verbose': False})
 
 
-IK_MAX_EPISODE_STEPS: int = 100
+IK_MAX_EPISODE_STEPS: int = 1
 IK_AGENT_RATE: float = 2.5
-IK_PHYSICS_RATE: float = 10.0
+IK_PHYSICS_RATE: float = 100.0
 IK_RTF: float = 100.0
 register(
     id='IK-Gazebo-v0',
