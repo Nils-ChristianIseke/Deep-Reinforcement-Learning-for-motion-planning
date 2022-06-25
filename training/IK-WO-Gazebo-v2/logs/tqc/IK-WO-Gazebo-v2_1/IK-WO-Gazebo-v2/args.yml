@@ -2,7 +2,7 @@
 - - - algo
     - tqc
   - - env
-    - IK-WO-Gazebo-v1
+    - IK-WO-Gazebo-v2
   - - env_kwargs
     - robot_model: panda
   - - eval_episodes
@@ -12,7 +12,7 @@
   - - hyperparams
     - null
   - - log_folder
-    - training/IK-WO-Gazebo-v1/logs
+    - training/IK-WO-Gazebo-v2/logs
   - - log_interval
     - -1
   - - n_evaluations
@@ -46,9 +46,9 @@
   - - study_name
     - null
   - - tensorboard_log
-    - training/IK-WO-Gazebo-v1/tensorboard_logs
+    - training/IK-WO-Gazebo-v2/tensorboard_logs
   - - trained_agent
-    - training/IK-WO-Gazebo-v1/logs/tqc/IK-WO-Gazebo-v1_1/rl_model_160000_steps.zip
+    - training/IK-WO-Gazebo-v2/logs/tqc/IK-WO-Gazebo-v2_1/rl_model_160000_steps.zip
   - - truncate_last_trajectory
     - true
   - - uuid

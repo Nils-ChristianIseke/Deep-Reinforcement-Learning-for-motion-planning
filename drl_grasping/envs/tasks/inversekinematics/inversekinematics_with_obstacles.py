@@ -23,7 +23,7 @@ class InverseKinematicsWithObstacles(Manipulation, abc.ABC):
     _object_visual: bool = True
     _object_static: bool = True
     _object_color: Tuple[float, float, float, float] = (0.0, 0.0, 1.0, 0.95)
-    # With those positions sometimes the shortest trajectory is obstacle free.
+    # With those positions sometimes the shortest trajectory is obstacle free.For IK-WO-Gazebo-v0
     # _object_spawn_centre: Tuple[float, float, float] = \
     #     (0.6,
     #      0,
@@ -33,26 +33,37 @@ class InverseKinematicsWithObstacles(Manipulation, abc.ABC):
     #      0.1,
     #      0.2)
 
-    # With those positions the shortest trajectory is never obstacle free.
+    # For IK-WO-Gazebo- v1
+    # _object_spawn_centre: Tuple[float, float, float] = \
+    #     (0.6,
+    #      0,
+    #      0.05)
+    # _object_spawn_volume: Tuple[float, float, float] = \
+    #     (0.3,
+    #      0.1,
+    #      0.1)
+    
+    #For IK-WO-Gazebo- v2
     _object_spawn_centre: Tuple[float, float, float] = \
         (0.6,
          0,
-         0.05)
+         0.2)
     _object_spawn_volume: Tuple[float, float, float] = \
         (0.3,
-         0.1,
-         0.1)
-    
+         0.3,
+         0.4)
     _workspace_volume: Tuple[float, float, float] = _object_spawn_volume
     _workspace_centre: Tuple[float, float, float] = (
         _object_spawn_centre)
 
     _obstacle_enable: bool =True
     _obstacle_type: str = 'box'
-     # With those dimensions the shortest trajectory is sometimes obstacle free.
+     # For IK-WO-Gazebo- v0
     # _obstacle_dimensions: List[float] = [0.05, 0.1, 0.4]
-         # With those dimensions the shortest trajectory is never obstacle free.
-    _obstacle_dimensions: List[float] = [0.05, 0.1, 0.6]
+    # For IK-WO-Gazebo- v1
+    # _obstacle_dimensions: List[float] = [0.05, 0.1, 0.6]
+     # For IK-WO-Gazebo- v2
+    _obstacle_dimensions: List[float] = [0.05, 0.3, 0.6]
     _obstacle_collision: bool = True
     _obstacle_visual: bool = True
     _obstacle_static: bool = True
