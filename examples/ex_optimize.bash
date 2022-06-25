@@ -11,11 +11,11 @@ SEED="69"
 # ENV_ID="Reach-OctreeWithColor-Gazebo-v0"
 ## Grasp
 # ENV_ID="Grasp-Octree-Gazebo-v0"
-#ENV_ID="Grasp-OctreeWithColor-Gazebo-v0"
+ENV_ID="Grasp-OctreeWithColor-Gazebo-v0"
 #ENV_ID="IK-Gazebo-v0"
-# ENV_ID="IK-WO-Gazebo-v0"
+#ENV_ID="IK-WO-Gazebo-v0"
 #ENV_ID="IK-WO-Gazebo-v1"
-ENV_ID="REACH-WO-Gazebo-v0"
+#ENV_ID="REACH-WO-Gazebo-v0"
 
 ## Robot model
 ROBOT_MODEL="panda"
@@ -24,11 +24,11 @@ ROBOT_MODEL="panda"
 
 ## Algorithm to use
 ## Algorithm to use
-# ALGO="sac"
+#ALGO="sac"
 # ALGO="td3"
-# ALGO="tqc"
+ALGO="tqc"
 # ALGO="ppo"
-ALGO="a2c"
+#ALGO="a2c"
 
 ## Args for optimization
 OPTIMIZE_SAMPLER="tpe"

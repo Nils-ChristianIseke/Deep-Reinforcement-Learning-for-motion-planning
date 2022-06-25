@@ -17,19 +17,31 @@ class InverseKinematicsWithObstacles(Manipulation, abc.ABC):
 
     _object_enable: bool = True
     _object_type: str = 'sphere'
-    _object_dimensions: List[float] = [0.05, 0.05, 0.05]
+       
+    _object_dimensions: List[float] = [0.05]
     _object_collision: bool = False
     _object_visual: bool = True
     _object_static: bool = True
     _object_color: Tuple[float, float, float, float] = (0.0, 0.0, 1.0, 0.95)
+    # With those positions sometimes the shortest trajectory is obstacle free.
+    # _object_spawn_centre: Tuple[float, float, float] = \
+    #     (0.6,
+    #      0,
+    #      0.1)
+    # _object_spawn_volume: Tuple[float, float, float] = \
+    #     (0.3,
+    #      0.1,
+    #      0.2)
+
+    # With those positions the shortest trajectory is never obstacle free.
     _object_spawn_centre: Tuple[float, float, float] = \
         (0.6,
          0,
-         0.2)
+         0.05)
     _object_spawn_volume: Tuple[float, float, float] = \
         (0.3,
-         0.3,
-         0.3)
+         0.1,
+         0.1)
     
     _workspace_volume: Tuple[float, float, float] = _object_spawn_volume
     _workspace_centre: Tuple[float, float, float] = (
@@ -37,7 +49,10 @@ class InverseKinematicsWithObstacles(Manipulation, abc.ABC):
 
     _obstacle_enable: bool =True
     _obstacle_type: str = 'box'
-    _obstacle_dimensions: List[float] = [0.05, 0.1, 0.4]
+     # With those dimensions the shortest trajectory is sometimes obstacle free.
+    # _obstacle_dimensions: List[float] = [0.05, 0.1, 0.4]
+         # With those dimensions the shortest trajectory is never obstacle free.
+    _obstacle_dimensions: List[float] = [0.05, 0.1, 0.6]
     _obstacle_collision: bool = True
     _obstacle_visual: bool = True
     _obstacle_static: bool = True
@@ -237,25 +252,22 @@ class InverseKinematicsWithObstacles(Manipulation, abc.ABC):
         # Mark the episode done if target is reached
         if current_distance < self._required_accuracy:
             self._is_done = True
-            reward += 1
+            
             # if self._sparse_reward:
-            #     reward += 1.0
-      
-        
+            reward += 1.0
+
         # Give reward based on how much closer robot got relative to the target for dense reward
         if not self._sparse_reward:
             reward += self._previous_distance - current_distance
             self._previous_distance = current_distance
-        
-        
-        neg_reward = self._get_reward_ALL()
-        
-        reward += neg_reward
+
+        # Subtract a small reward each step to provide incentive to act quickly (if enabled)
+        reward -= self._act_quick_reward
+        reward += self._get_reward_ALL()
         if self._verbose:
             print(f"reward: {reward}")
 
         return Reward(reward)
-
 
 
     def _get_reward_ALL(self) -> float:
@@ -274,7 +286,7 @@ class InverseKinematicsWithObstacles(Manipulation, abc.ABC):
         if self.check_obstacle_collision():
             reward -= self._obstacle_collision_reward
             self._obstacle_collision_counter +=1
-            self._is_failure =self._obstacle_collision_counter >= self._n_obstacle_collisions_till_termination
+            self._is_failure = self._obstacle_collision_counter >= self._n_obstacle_collisions_till_termination
             
             if self._verbose:
                 print("Robot collided with an obstacle.")

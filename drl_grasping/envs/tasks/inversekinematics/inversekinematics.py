@@ -8,14 +8,23 @@ import numpy as np
 from drl_grasping.envs.models.robots import Panda
 
 class InverseKinematics(Manipulation, abc.ABC):
+    # In this task the agent shall learn the inverse kinematic model of the robot. Thus, given a point in the workspace it should learn a policy to
+    # calculate the needed joint angles to get there.
+    # Observation: Position of the endeffector, position of the goal
+    # Action: joint angles of the robotic arm
+    # Reward: Positive reward for reaching the goal, or getting closer to it, negativ reward for colliding with an obstacle or the ground
+
+
+
 
     # Overwrite parameters for ManipulationGazeboEnvRandomizer
     
     # Set Collision Properties of Robot
-    _robot_arm_collision: bool =True
+    _robot_arm_collision: bool = True
     _robot_hand_collision: bool = True    
     
     # Add an Object as Target
+    # This object has no collision properties. It's task is to define and visualize the goal point
     _object_enable: bool = True
     _object_type: str = 'sphere'
     _object_dimensions: List[float] = [0.05, 0.05, 0.05]
@@ -23,7 +32,9 @@ class InverseKinematics(Manipulation, abc.ABC):
     _object_visual: bool = True
     _object_static: bool = True
     _object_color: Tuple[float, float, float, float] = (0.0, 0.0, 1.0, 0.95)
-    # The object is spanwed inside a given Boundingbox defined by it's global center and it's dimensions
+
+    # The object is spanwed inside a given Boundingbox defined by it's global center and it's dimensions.
+    # By choosing the dimensions of the spawning volume, it is possible to change the size of the observation space. 
     _object_spawn_centre: Tuple[float, float, float] = \
         (0.4,
          0,
@@ -32,7 +43,7 @@ class InverseKinematics(Manipulation, abc.ABC):
         (0.3,
          0.3,
          0.1)
-    
+    # For this task we do not want obstacles or ground.
     _obstacle_enable: bool =False
     _ground_enable:bool = False
    
@@ -66,37 +77,38 @@ class InverseKinematics(Manipulation, abc.ABC):
         self._previous_distance: float = None
 
     def create_action_space(self) -> ActionSpace:
+        """Create the action space for the robotic arm. The action space is defined by the upper and lower limits of the robotic arm which, are taken from it's Class definition.
 
+        Returns:
+            ActionSpace: gym.spaces.Box(), containing the lower and uppper joint_limits of the robotic arm
+        """
         # 0:7 Joint_angles
         
         joint_limits = Panda.get_joint_limits()
         joint_limits_lower = np.array([limit[0] for limit in joint_limits[:-2]])
         joint_limits_upper = np.array([limit[1] for limit in joint_limits[:-2]])
-        
-        print(joint_limits)
-        
-        print(joint_limits_lower)
-        # FIX IF TIME: 
-        # If individual joint_limits are specified following error is thrown --> Investigate if there is time
-        # file "/usr/local/lib/python3.8/dist-packages/gym/spaces/box.py", line 69, in __init__
-        # low_precision = _get_precision(self.low.dtype)
-        # AttributeError: 'list' object has no attribute 'dtype
-    
+
         return gym.spaces.Box(low=joint_limits_lower,
                               high=joint_limits_upper,
                               dtype=np.float32)
 
     def create_observation_space(self) -> ObservationSpace:
-
-        # 0:3 - (x, y, z) end effector position
-        # 3:6 - (x, y, z) target position
-        # Note: These could theoretically be restricted to the workspace and object spawn area instead of inf
+        """Creates the Observation spaces, defines the limits in which observations are valid.
+        Returns:
+            ObservationSpace:  # gym.spaces.Box(), containing all possible values of observations 0:2 - (x, y, z) end effector position 3:5 - (x, y, z) target position
+        """
         return gym.spaces.Box(low=-np.inf,
                               high=np.inf,
                                 shape=(6,),
                               dtype=np.float32)
 
-    def set_action(self, action: Action):
+    def set_action(self, action: Action) -> None:
+        """Defines how an action is created. Sets the joint_angles of the robotic arm to the value given by the reinforcement learning agent.
+        The motion plan between the actual joint position and the goal joint position is calculated by moveit2.
+
+        Args:
+            action (Action): _description_
+        """
         if self._verbose:
             print(f"action: {action}")
         
@@ -108,7 +120,12 @@ class InverseKinematics(Manipulation, abc.ABC):
         self.moveit2.execute()
 
     def get_observation(self) -> Observation:
+        """Defines how the agent is getting information. In this case it is getting the position of the endeffector and the goal point from 
+        the gazebo API.
 
+        Returns:
+            Observation: np.array: 0:2 -(x,y,z) end_effector position, 3:5 - (x,y,z) goal_position
+        """
         # Get current end-effector and target positions
         ee_position = self.get_ee_position()
         target_position = self.get_target_position()
@@ -124,7 +141,16 @@ class InverseKinematics(Manipulation, abc.ABC):
         return observation
 
     def get_reward(self) -> Reward:
+        """Calculating the reward. 
+        Dense reward:
+        A poisitve reward is assigned when getting closer to the target the in the previous step. A negative reward is assigned when the distance to the target
+        increases. As soon as the robot collides with an obstacle a negative reward is assigned. For reaching the goal point, a positive reward is assigned.
+        Sparse Reward:
+        A reward is only assigned if the robot reaches the goal or collides with an obstacle.
 
+        Returns:
+            Reward: _description_
+        """
         reward = 0.0
 
         # Compute the current distance to the target
@@ -143,7 +169,7 @@ class InverseKinematics(Manipulation, abc.ABC):
             
             self._previous_distance = current_distance
 
-        # Subtract a small reward each step to provide incentive to act quickly (if enabled)
+        # Act quickly reward is assigned for rewarding a fast solution (steps) (if enabled)
         reward -= self._act_quick_reward
         print(current_distance)
         print(reward)
@@ -153,7 +179,11 @@ class InverseKinematics(Manipulation, abc.ABC):
         return Reward(reward)
 
     def is_done(self) -> bool:
+        """Checks if the condition to end the episode are fullfilled.
 
+        Returns:
+            bool: True if the ending position is fullfilled. Falls otherwise.
+        """
         done = self._is_done
 
         if self._verbose:
@@ -161,8 +191,9 @@ class InverseKinematics(Manipulation, abc.ABC):
 
         return done
 
-    def reset_task(self):
-
+    def reset_task(self)-> None: 
+        """
+        """
         self._is_done = False
 
         # Compute and store the distance after reset if using dense reward

@@ -1,0 +1,68 @@
+action_noise: !!python/object:stable_baselines3.common.noise.NormalActionNoise
+  _mu: !!python/object/apply:numpy.core.multiarray._reconstruct
+    args:
+    - &id001 !!python/name:numpy.ndarray ''
+    - !!python/tuple
+      - 0
+    - !!binary |
+      Yg==
+    state: !!python/tuple
+    - 1
+    - !!python/tuple
+      - 7
+    - &id002 !!python/object/apply:numpy.dtype
+      args:
+      - f8
+      - false
+      - true
+      state: !!python/tuple
+      - 3
+      - <
+      - null
+      - null
+      - null
+      - -1
+      - -1
+      - 0
+    - false
+    - !!binary |
+      AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+  _sigma: !!python/object/apply:numpy.core.multiarray._reconstruct
+    args:
+    - *id001
+    - !!python/tuple
+      - 0
+    - !!binary |
+      Yg==
+    state: !!python/tuple
+    - 1
+    - !!python/tuple
+      - 7
+    - *id002
+    - false
+    - !!binary |
+      H1dDxGQMjD8fV0PEZAyMPx9XQ8RkDIw/H1dDxGQMjD8fV0PEZAyMPx9XQ8RkDIw/H1dDxGQMjD8=
+batch_size: 64
+buffer_size: 150000
+ent_coef: auto_0.5_0.1
+gamma: 0.9911772129804908
+gradient_steps: 2
+learning_rate: 0.00023346821844170696
+learning_starts: 5000
+optimize_memory_usage: true
+policy: MlpPolicy
+policy_kwargs:
+  features_extractor_kwargs:
+    batch_normalization: true
+    channel_multiplier: 32
+    channels_in: 7
+    depth: 4
+    fast_conv: true
+    features_dim: 256
+    full_depth: 2
+  net_arch:
+  - 512
+  - 384
+target_entropy: auto
+tau: 0.0022620497113866765
+train_freq: 1

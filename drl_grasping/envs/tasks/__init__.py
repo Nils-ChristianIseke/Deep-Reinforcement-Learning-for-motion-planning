@@ -235,7 +235,7 @@ register(
 IK_WO_MAX_EPISODE_STEPS: int = 100
 IK_WO_AGENT_RATE: float = 2.5
 IK_WO_PHYSICS_RATE: float = 250.0
-IK_WO_RTF: float = 100.0
+IK_WO_RTF: float = 1.0
 register(
     id='IK-WO-Gazebo-v0',
     entry_point='gym_ignition.runtimes.gazebo_runtime:GazeboRuntime',
@@ -259,9 +259,8 @@ register(
 
 IK_WO_MAX_EPISODE_STEPS: int = 100
 IK_WO_AGENT_RATE: float = 2.5
-IK_WO_PHYSICS_RATE: float = 100
+IK_WO_PHYSICS_RATE: float = 250.0
 IK_WO_RTF: float = 100.0
-
 register(
     id='IK-WO-Gazebo-v1',
     entry_point='gym_ignition.runtimes.gazebo_runtime:GazeboRuntime',
@@ -277,8 +276,8 @@ register(
             'act_quick_reward': -0.01,
             'required_accuracy': 0.05,
             'verbose': False,
-            'ground_collision_reward': -1,
-            'obstacle_collision_reward': -1,
+            'ground_collision_reward': -1.0,
+            'obstacle_collision_reward': -1.0,
             'n_ground_collisions_till_termination': 1,
             'n_obstacle_collisions_till_termination': 1,
             })

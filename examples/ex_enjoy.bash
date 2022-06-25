@@ -23,14 +23,14 @@ ROBOT_MODEL="panda"
 ## Algorithm to use
 # ALGO="sac"
 # ALGO="td3"
-#ALGO="tqc"
+ALGO="tqc"
 # ALGO="a2c"
-ALGO="ppo"
+#ALGO="ppo"
 ## Arguments for the environment
 ENV_ARGS="robot_model:\"${ROBOT_MODEL}\""
 
 ## Checkpoint to load
-CHECKPOINT=50000
+CHECKPOINT=490000
 
 ## Path the parent training directory
 TRAINING_DIR="training"

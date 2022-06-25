@@ -1,0 +1,72 @@
+action_noise: !!python/object:stable_baselines3.common.noise.NormalActionNoise
+  _mu: !!python/object/apply:numpy.core.multiarray._reconstruct
+    args:
+    - &id001 !!python/name:numpy.ndarray ''
+    - !!python/tuple
+      - 0
+    - !!binary |
+      Yg==
+    state: !!python/tuple
+    - 1
+    - !!python/tuple
+      - 5
+    - &id002 !!python/object/apply:numpy.dtype
+      args:
+      - f8
+      - false
+      - true
+      state: !!python/tuple
+      - 3
+      - <
+      - null
+      - null
+      - null
+      - -1
+      - -1
+      - 0
+    - false
+    - !!binary |
+      AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  _sigma: !!python/object/apply:numpy.core.multiarray._reconstruct
+    args:
+    - *id001
+    - !!python/tuple
+      - 0
+    - !!binary |
+      Yg==
+    state: !!python/tuple
+    - 1
+    - !!python/tuple
+      - 5
+    - *id002
+    - false
+    - !!binary |
+      nnthkoBqhz+ee2GSgGqHP557YZKAaoc/nnthkoBqhz+ee2GSgGqHPw==
+batch_size: 32
+buffer_size: 25000
+ent_coef: auto_0.1_0.05
+gamma: 0.997526866926856
+gradient_steps: 2
+learning_rate: 9.901456752345611e-05
+learning_starts: 0
+optimize_memory_usage: true
+policy: OctreeCnnPolicy
+policy_kwargs:
+  features_extractor_kwargs:
+    batch_normalization: false
+    channel_multiplier: 16
+    channels_in: 7
+    depth: 4
+    features_dim: 64
+    full_depth: 2
+    full_depth_channels: 16
+  n_critics: 3
+  n_quantiles: 31
+  net_arch:
+  - 256
+  - 256
+target_entropy: auto
+tau: 0.0050588127407311095
+top_quantiles_to_drop_per_net: 2
+train_freq: 1
+use_sde: false
