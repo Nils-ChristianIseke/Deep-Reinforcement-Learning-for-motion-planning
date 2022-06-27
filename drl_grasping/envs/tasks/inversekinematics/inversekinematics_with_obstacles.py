@@ -132,36 +132,46 @@ class InverseKinematicsWithObstacles(Manipulation, abc.ABC):
         self._n_ground_collisions_till_termination = n_ground_collisions_till_termination
         self._n_obstacle_collisions_till_termination = n_obstacle_collisions_till_termination
     def create_action_space(self) -> ActionSpace:
+        """Create the action space for the robotic arm. The action space is defined by the upper and lower limits of the robotic arm which, are taken from it's Class definition.
 
-        # 0:3 - (x, y, z) displacement
-        #     - rescaled to metric units before use
-        
+        Returns:
+            ActionSpace: gym.spaces.Box(), containing the lower and uppper joint_limits of the robotic arm
+        """ 
         joint_limits = Panda.get_joint_limits()
-        joint_limits_lower = [limit[0] for limit in joint_limits]
-        joint_limits_upper = [limit[1] for limit in joint_limits]
+        joint_limits_lower = np.array([limit[0] for limit in joint_limits[:-2]])
+        joint_limits_upper = np.array([limit[1] for limit in joint_limits[:-2]])
         
         # If individual joint_limits are specified following error is thrown --> Investigate if there is time
         # file "/usr/local/lib/python3.8/dist-packages/gym/spaces/box.py", line 69, in __init__
         # low_precision = _get_precision(self.low.dtype)
         # AttributeError: 'list' object has no attribute 'dtype
-        return gym.spaces.Box(low=min(joint_limits_lower),
-                              high=max(joint_limits_upper),
+        return gym.spaces.Box(low=joint_limits_lower,
+                              high=joint_limits_upper,
                               shape=(7,),
                               dtype=np.float32)
 
     def create_observation_space(self) -> ObservationSpace:
+        """Creates the Observation spaces, defines the limits in which observations are valid.
+        Returns:
+            ObservationSpace:  # gym.spaces.Box(), containing all possible values of observations:
+        0:2 - (x, y, z) end effector position
+        3:5 - (x, y, z) target position
+        6:8 - (x, y, z) obstacle position
+        8:11 - () obstacle dimensions
+        """
         # Observation space
-        # 0:2 - (x, y, z) end effector position
-        # 3:5 - (x, y, z) target position
-        # 6:8 - (x, y, z) obstacle position
-        # 8:11 - () obstacle dimensions
-        # Note: These could theoretically be restricted to the workspace and object spawn area instead of inf
         return gym.spaces.Box(low=-np.inf,
                               high=np.inf,
                                 shape=(12,),
                               dtype=np.float32)
 
     def set_action(self, action: Action):
+        """Defines how an action is created. Sets the joint_angles of the robotic arm to the value given by the reinforcement learning agent.
+        The motion plan between the actual joint position and the goal joint position is calculated by moveit2.
+
+        Args:
+            action (Action): _description_
+        """
         if self._verbose:
             print(f"action: {action}")
         
@@ -173,8 +183,14 @@ class InverseKinematicsWithObstacles(Manipulation, abc.ABC):
         self.moveit2.execute()
 
     def get_observation(self) -> Observation:
+        """Defines how the agent is getting information. In this case it is getting the position of the endeffector and the goal point from 
+        the gazebo API.
 
+        Returns:
+            Observation: np.array: 0:2 -(x,y,z) end_effector position, 3:5 - (x,y,z) goal_position
+        """
         # Get current end-effector and target positions
+        
         ee_position = self.get_ee_position()
         target_position = self.get_target_position()
         obstacle_position = self.get_obstacle_position()
@@ -254,7 +270,16 @@ class InverseKinematicsWithObstacles(Manipulation, abc.ABC):
 #         return Reward(reward)
 
     def get_reward(self) -> Reward:
+        """Calculating the reward. 
+        Dense reward:
+        A poisitve reward is assigned when getting closer to the target the in the previous step. A negative reward is assigned when the distance to the target
+        increases. As soon as the robot collides with an obstacle a negative reward is assigned. For reaching the goal point, a positive reward is assigned.
+        Sparse Reward:
+        A reward is only assigned if the robot reaches the goal or collides with an obstacle.
 
+        Returns:
+            Reward: _description_
+        """
         reward = 0.0
 
         # Compute the current distance to the target
@@ -282,7 +307,7 @@ class InverseKinematicsWithObstacles(Manipulation, abc.ABC):
 
 
     def _get_reward_ALL(self) -> float:
-
+        
         # Subtract a small reward each step to provide incentive to act quickly
         reward = -self._act_quick_reward
 
@@ -310,7 +335,11 @@ class InverseKinematicsWithObstacles(Manipulation, abc.ABC):
 
 
     def is_done(self) -> bool:
+        """Checks if the condition to end the episode are fullfilled.
 
+        Returns:
+            bool: True if the ending position is fullfilled. Falls otherwise.
+        """
         if self._is_done:
             print("Success")
             return True
@@ -319,7 +348,8 @@ class InverseKinematicsWithObstacles(Manipulation, abc.ABC):
              return True
 
     def reset_task(self):
-
+        """Resets the variables _is_done and _previous_distance and _is_failure
+        """
         self._is_done = False
         self._is_failure = False
         # Compute and store the distance after reset if using dense reward
@@ -330,7 +360,11 @@ class InverseKinematicsWithObstacles(Manipulation, abc.ABC):
             print(f"\ntask reset")
 
     def get_distance_to_target(self) -> Tuple[float, float, float]:
+        """Calculates the distance to the target.
 
+        Returns:
+            Tuple[float, float, float]: 1:3 -> (x,y,z) position of the endeffector
+        """
         # Get current end-effector and target positions
         ee_position = self.get_ee_position()
         target_position = self.get_target_position()
@@ -341,7 +375,11 @@ class InverseKinematicsWithObstacles(Manipulation, abc.ABC):
                                ee_position[2] - target_position[2]])
 
     def get_target_position(self) -> Tuple[float, float, float]:
+        """Gets the position of the target.
 
+        Returns:
+            Tuple[float, float, float]: 0:2 -> (x,y,z) position of the endeffector
+        """
         target_object =     self.world.get_model(self.object_names[0]).to_gazebo()
         return target_object.get_link(link_name=target_object.link_names()[0]).position()
     def get_obstacle_position(self) -> Tuple[float, float, float,float, float, float]:

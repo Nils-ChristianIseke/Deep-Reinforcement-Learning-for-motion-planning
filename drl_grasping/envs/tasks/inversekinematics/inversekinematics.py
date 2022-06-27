@@ -191,8 +191,8 @@ class InverseKinematics(Manipulation, abc.ABC):
 
         return done
 
-    def reset_task(self)-> None: 
-        """
+    def reset_task(self) -> None: 
+        """Resets the variables _is_done and _previous_distance
         """
         self._is_done = False
 
@@ -204,7 +204,11 @@ class InverseKinematics(Manipulation, abc.ABC):
             print(f"\ntask reset")
 
     def get_distance_to_target(self) -> Tuple[float, float, float]:
+        """Calculates the distance to the target.
 
+        Returns:
+            Tuple[float, float, float]: 1:3 -> (x,y,z) position of the endeffector
+        """
         # Get current end-effector and target positions
         ee_position = self.get_ee_position()
         target_position = self.get_target_position()
@@ -215,6 +219,10 @@ class InverseKinematics(Manipulation, abc.ABC):
                                ee_position[2] - target_position[2]])
 
     def get_target_position(self) -> Tuple[float, float, float]:
+        """Gets the position of the target.
 
+        Returns:
+            Tuple[float, float, float]: 0:2 -> (x,y,z) position of the endeffector
+        """
         target_object = self.world.get_model(self.object_names[0]).to_gazebo()
         return target_object.get_link(link_name=target_object.link_names()[0]).position()
