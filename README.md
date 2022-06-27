@@ -192,10 +192,19 @@ Currently, the following environments are included inside this repository. Take 
   - enlarging the spawning volume of obstacle and goal point
   - Adding more than 1 obstacle
   - Adding moving obstacles
-  - Adding moving goal points
+  - Adding moving obstacles and goal_points
   - Adding obstacles of complex shape
   - Comparing the RL-Learing Approach for path planning with classic approaches to path planning
   - Making the task more complex by sensing the obstacle space via a camera (as it's done in the grasp task), instead of getting the positions of the obstacles via the gazebo API
+</details>
+<details><summary>Adding new environments (click to expand)</summary>
+To implement a new task / environment, the following steps are necessary:
+  
+  1. In the dir "/envs/tasks" add your task(e.g.: inversekinematics.py inside the inversekinematics dir)
+  2. Register your task as gym environment inside /envs/tasks/__init__.py (e.g.: adding register(
+    id='IK-Gazebo-v0',...kwargs={...,'task_cls': InverseKinematics,...)
+  4. Add the hyperparams for your task "/hyperparams" (e.g. add IK-Gazebo-v0 with arguments to the tqc.yml)
+  5. Adjust the arguments of ex_train.bash (examples/ex_train.bash). (e.g. change ENV_ID to "IK-Gazebo-v0" and ALGO to "tqc"
 </details>
 <details><summary>Training New Agents (click to expand)</summary>
 
