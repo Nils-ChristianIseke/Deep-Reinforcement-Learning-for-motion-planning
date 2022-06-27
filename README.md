@@ -188,6 +188,7 @@ Currently, the following environments are included inside this repository. Take 
 
  <details><summary>Future Work (click to expand)</summary>
  From the author's point future work could focus on:
+  
   - enlarging the spawning volume of obstacle and goal point
   - Adding more than 1 obstacle
   - Adding moving obstacles
