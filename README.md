@@ -200,11 +200,12 @@ Currently, the following environments are included inside this repository. Take 
 <details><summary>Adding new environments (click to expand)</summary>
 To implement a new task / environment, the following steps are necessary:
   
-  1. In the dir '''/envs/task''' add your task(e.g.: inversekinematics.py inside the inversekinematics dir)
-  2. Register your task as gym environment inside /envs/tasks/__init__.py (e.g.: adding register(
+  1. In the dir `/envs/task` add your task(e.g.: inversekinematics.py inside the inversekinematics dir)
+  2. Register your task as gym environment inside `/envs/tasks/__init__.py (e.g.: adding register(
     id='IK-Gazebo-v0',...kwargs={...,'task_cls': InverseKinematics,...)
-  4. Add the hyperparams for your task "/hyperparams" (e.g. add IK-Gazebo-v0 with arguments to the tqc.yml)
-  5. Adjust the arguments of ex_train.bash (examples/ex_train.bash). (e.g. change ENV_ID to "IK-Gazebo-v0" and ALGO to "tqc"
+  4. Add the hyperparams for your task `/hyperparams` (e.g. add IK-Gazebo-v0 with arguments to the tqc.yml)
+  5. Adjust the arguments of `examples/ex_train.bash` (e.g. change ENV_ID to "IK-Gazebo-v0" and ALGO to "tqc")
+  6. Uncommend model.env.render("human") in  `/scripts/train.py` if you want to see the simulation of the env.
 </details>
 <details><summary>Training New Agents (click to expand)</summary>
 
