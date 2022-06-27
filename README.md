@@ -186,15 +186,15 @@ Currently, the following environments are included inside this repository. Take 
 </details>
 
 
- <details><summary>Possible extensions (click to expand)</summary>
+ <details><summary>Future Work (click to expand)</summary>
   From the author's point future work could focus on:
-  - enlarging the spawning volume of obstacle and goal point
-  - Adding more than 1 obstacle
-  - Adding moving obstacles
-  - Adding moving goal points
-  - Adding obstacles of complex shape
-  - Comparing the RL-Learing Approach for path planning with classic approaches to path planning
-  - Making the task more complex by sensing the obstacle space via a camera (as it's done in the grasp task), instead of getting the positions of the obstacles via the gazebo API
+    - enlarging the spawning volume of obstacle and goal point
+    - Adding more than 1 obstacle
+    - Adding moving obstacles
+    - Adding moving goal points
+    - Adding obstacles of complex shape
+    - Comparing the RL-Learing Approach for path planning with classic approaches to path planning
+    - Making the task more complex by sensing the obstacle space via a camera (as it's done in the grasp task), instead of getting the positions of the obstacles via the gazebo API
 </details>
 <details><summary>Training New Agents (click to expand)</summary>
 
