@@ -192,10 +192,9 @@ Currently, the following environments are included inside this repository. Take 
   
   - enlarging the spawning volume of obstacle and goal point
   - Adding more than 1 obstacle
-  - Adding moving obstacles
   - Adding moving obstacles and goal_points
   - Adding obstacles of complex shape
-  - Comparing the RL-Learing Approach for path planning with classic approaches to path planning
+  - Comparing the RL-Learning Approach for path planning with classic approaches of path planning
   - Making the task more complex by sensing the obstacle space via a camera (as it's done in the grasp task), instead of getting the positions of the obstacles via the gazebo API
   - Autotuning Hyperparameters
 </details>
