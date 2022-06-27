@@ -90,7 +90,7 @@ def main(args=None):
 
     # Prepare experiment and launch hyperparameter optimization if needed
     model = exp_manager.setup_experiment()
-    model.env.render("human")
+    # model.env.render("human")
     if args.optimize_hyperparameters:
         exp_manager.hyperparameters_optimization()
     else:

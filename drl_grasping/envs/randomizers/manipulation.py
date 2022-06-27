@@ -87,7 +87,6 @@ class ManipulationGazeboEnvRandomizer(gazebo_env_randomizer.GazeboEnvRandomizer,
         # Dict to keep track of set object positions - without stepping (faster than lookup through gazebo)
         # It is used to make sure that objects are not spawned inside each other
         self.__object_positions = {}
-
     # ===========================
     # PhysicsRandomizer interface
     # ===========================
@@ -405,6 +404,8 @@ class ManipulationGazeboEnvRandomizer(gazebo_env_randomizer.GazeboEnvRandomizer,
         link = obstacle_model.to_gazebo().get_link(
             link_name=obstacle_model.link_names()[0])
         link.enable_contact_detection(True)
+
+    
     def add_invisible_world_bottom_collision_plane(self,
                                                    task: SupportedTasks,
                                                    gazebo: scenario.GazeboSimulator):
@@ -455,7 +456,9 @@ class ManipulationGazeboEnvRandomizer(gazebo_env_randomizer.GazeboEnvRandomizer,
                 self.object_random_pose(task=task)
             elif not self.object_models_randomizer_enabled():
                 self.reset_default_object_pose(task=task)
-
+        if task._obstacle_enable:
+            if task._obstacle_random_pose_spawn:
+                self.obstacle_random_pose(task=task)
         # Execute a paused run to process these randomization operations
         if not gazebo.run(paused=True):
             raise RuntimeError("Failed to execute a paused Gazebo run")
@@ -670,7 +673,22 @@ class ManipulationGazeboEnvRandomizer(gazebo_env_randomizer.GazeboEnvRandomizer,
             obj.reset_base_world_velocity([0.0, 0.0, 0.0],
                                           [0.0, 0.0, 0.0])
             self.__object_positions[object_name] = position
+    def obstacle_random_pose(self,
+                           task: SupportedTasks):
 
+        for obstacle_name in self.task.obstacle_names:
+            position, quat_random = self.get_random_object_pose(centre=task._obstacle_spawn_centre,
+                                                                volume=task._obstacle_spawn_volume,
+                                                                np_random=task.np_random)
+            if not self.task._obstacle_random_orientation_spawn:
+                quat_random= self.task._obstacle_quat_xyzw
+            if not self.task._obstacle_random_poistion_spawn:
+                position = self.task._obstacle_spawn_centre
+            obj = task.world.to_gazebo().get_model(obstacle_name).to_gazebo()
+            obj.reset_base_pose(position,quat_random)
+            obj.reset_base_world_velocity([0.0, 0.0, 0.0],
+                                          [0.0, 0.0, 0.0])
+            self.__object_positions[obstacle_name] = position
     def get_random_object_pose(self, centre, volume, np_random, name: str = "", min_distance_to_other_objects: float = 0.25, min_distance_decay_factor: float = 0.9):
 
         is_too_close = True

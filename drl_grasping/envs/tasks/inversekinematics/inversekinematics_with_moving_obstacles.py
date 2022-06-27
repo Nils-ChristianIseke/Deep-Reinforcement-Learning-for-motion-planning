@@ -45,14 +45,16 @@ class InverseKinematicsWithMovingObstacles(Manipulation, abc.ABC):
          0,
          _obstacle_dimensions[2]/2,)
     # _obstacle_spawn_volume_proportion: float = 0.75
-    # _obstacle_spawn_volume: Tuple[float, float, float] = \
-    #     (_obstacle_spawn_volume_proportion*_workspace_volume[0],
-    #      _obstacle_spawn_volume_proportion*_workspace_volume[1],
-    #      _obstacle_spawn_volume_proportion*_workspace_volume[2])
+    _obstacle_spawn_volume: Tuple[float, float, float] = \
+        (0,
+         0.3,
+         0)
     _obstacle_quat_xyzw= (0,0,1,0)
     _obstacle_mass=1
-                                    
-                
+                           
+    _obstacle_random_pose_spawn = True                   
+    _obstacle_random_poistion_spawn = True
+    _obstacle_random_orientation_spawn = False
     
     
     
