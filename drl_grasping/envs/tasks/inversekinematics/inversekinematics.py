@@ -43,6 +43,10 @@ class InverseKinematics(Manipulation, abc.ABC):
         (0.3,
          0.3,
          0.1)
+
+    _obstacle_random_pose_spawn = True                   
+    _obstacle_random_poistion_spawn = True
+    _obstacle_random_orientation_spawn = False
     # For this task we do not want obstacles or ground.
     _obstacle_enable: bool =False
     _ground_enable:bool = False
@@ -113,7 +117,7 @@ class InverseKinematics(Manipulation, abc.ABC):
             print(f"action: {action}")
         
         # Set joint_angles
-        self.set_jointangles(action)
+        self.set_jointangles([float(joint_angle)for joint_angle in action])
 
         # Plan and execute motion to joint_angles
         self.moveit2.plan_kinematic_path(allowed_planning_time=0.1)
@@ -171,8 +175,6 @@ class InverseKinematics(Manipulation, abc.ABC):
 
         # Act quickly reward is assigned for rewarding a fast solution (steps) (if enabled)
         reward -= self._act_quick_reward
-        print(current_distance)
-        print(reward)
         if self._verbose:
             print(f"reward: {reward}")
 

@@ -44,7 +44,6 @@ class InverseKinematicsWithMovingObstacles(Manipulation, abc.ABC):
         (0.4,
          0,
          _obstacle_dimensions[2]/2,)
-    # _obstacle_spawn_volume_proportion: float = 0.75
     _obstacle_spawn_volume: Tuple[float, float, float] = \
         (0,
          0.3,

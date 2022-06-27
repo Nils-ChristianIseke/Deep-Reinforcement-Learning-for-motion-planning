@@ -81,7 +81,9 @@ class InverseKinematicsWithObstacles(Manipulation, abc.ABC):
     _obstacle_mass=1
                                     
                 
-    
+    _obstacle_random_pose_spawn = False                  
+    _obstacle_random_poistion_spawn = False
+    _obstacle_random_orientation_spawn = False
     
     
     _ground_enable:bool = True
