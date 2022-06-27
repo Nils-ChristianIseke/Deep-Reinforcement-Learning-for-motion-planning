@@ -200,7 +200,7 @@ Currently, the following environments are included inside this repository. Take 
 <details><summary>Adding new environments (click to expand)</summary>
 To implement a new task / environment, the following steps are necessary:
   
-  1. In the dir "/envs/tasks" add your task(e.g.: inversekinematics.py inside the inversekinematics dir)
+  1. In the dir '''/envs/task''' add your task(e.g.: inversekinematics.py inside the inversekinematics dir)
   2. Register your task as gym environment inside /envs/tasks/__init__.py (e.g.: adding register(
     id='IK-Gazebo-v0',...kwargs={...,'task_cls': InverseKinematics,...)
   4. Add the hyperparams for your task "/hyperparams" (e.g. add IK-Gazebo-v0 with arguments to the tqc.yml)
