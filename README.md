@@ -7,7 +7,8 @@ In our Extension of the fantastic work of [AndrejOrsula](https://github.com/Andr
   
   1. InverseKinematics
   2. InverseKinematicsWithObstacles
-  3. ForwardKinematicsWithObstacles
+  3. InverseKonematicsWithRandomObstacles
+  4. ReachWithObstacles
 
 </details>
 The following animations are showing some results using the Panda robotic arm.
