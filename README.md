@@ -197,6 +197,7 @@ Currently, the following environments are included inside this repository. Take 
   - Adding obstacles of complex shape
   - Comparing the RL-Learing Approach for path planning with classic approaches to path planning
   - Making the task more complex by sensing the obstacle space via a camera (as it's done in the grasp task), instead of getting the positions of the obstacles via the gazebo API
+  - Autotuning Hyperparameters
 </details>
 <details><summary>Adding new environments (click to expand)</summary>
 To implement a new task / environment, the following steps are necessary:
@@ -266,15 +267,3 @@ Hyperparameters for training of RL agents can be found in [hyperparams](hyperpar
 ├── docker              # Dockerfile for this project
 └── drl_grasping.repos  # List of other dependencies created for `drl_grasping`
 ```
-
----
-
-In case you have any problems or questions, feel free to open an [Issue](https://github.com/AndrejOrsula/drl_grasping/issues/new) or a [Discussion](https://github.com/AndrejOrsula/drl_grasping/discussions/new).
-# deepRL_IK
-# deepRL_IK
-# deepRL_IK
-# deepRL_IK
-# deepRLIK
-# deepRLIK
-# deepRLIK
-# deepRLIK
