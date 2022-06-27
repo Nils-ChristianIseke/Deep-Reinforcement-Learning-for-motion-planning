@@ -168,14 +168,7 @@ Currently, the following environments are included inside this repository. Take 
     Environment: The environment contains the robotic arm, a randomly spawned goal point and an obstacle.
     Observation: Position of the goal point, the endeffector of the robotic arm and position + orientation of the obstacle
     Action: The joint angles of the robotic arm.
-  - [Reach](drl_grasping/envs/tasks/reach) task (extension of the orginal Reach Task)
-      - [ReachWithObstacles](drl_grasping/envs/tasks/reach/reach.py)
-    -Description: The agents goal is to calculate the necessary goal positions to move the robotic arm to reach a random goal point, while avoiding collisions with an obstacle. The inverse kinematic is calculated via MOVEIT!.
-    Environment: The environment contains the robotic arm, a randomly spawned goal point and an obstacle.
-    Observation: Position of the goal point, the endeffector of the robotic arm and position + orientation of the obstacle
-    Action: The goal point.  
-  
-  - [InverseKinematicsWithMovingObstacles](drl_grasping/envs/tasks/inverse_kinematics_with_obstacles.py)
+  - [InverseKinematicsWithRandomObstacles](drl_grasping/envs/tasks/inverse_kinematics_with_obstacles.py)
       -Description: The agents goal is to calculate the necessary joint angles of the robotic arm to reach a random goal point, while avoiding collisions with an obstacle
     Environment: The environment contains the robotic arm, a randomly spawned goal point and an obstacle.
     Observation: Position of the goal point, the endeffector of the robotic arm and position + orientation of the obstacle
@@ -185,14 +178,24 @@ Currently, the following environments are included inside this repository. Take 
     -Description: The agents goal is to calculate the necessary goal positions to move the robotic arm to reach a random goal point, while avoiding collisions with an obstacle. The inverse kinematic is calculated via MOVEIT!.
     Environment: The environment contains the robotic arm, a randomly spawned goal point and an obstacle.
     Observation: Position of the goal point, the endeffector of the robotic arm and position + orientation of the obstacle
-    Action: The goal point.
+    Action: The goal point.  
   
-  Inside the definition of each class some variables can be set, e.g.: For the InverseKinematicsWithMovingObstacles task. Especially important are the object, and obstacle related variables. For the newly implemented tasks the object and obstacle related variables (e.g.:_object_enable, _object_type, _object_dimension_volume, obstacle_type, etc.) define the properties of the goal point and the obstacle (where it is spawned, what it looks like etc.).  The standarts values are restricting the possible spawning volume of object and obstalce small, to keep the observation space for the RL-Agent small. For a more general solution the spawning volume of both should be the same size as the workspace of the robot. 
+  
+  
+  Inside the definition of each class some variables can be set, e.g.: For the InverseKinematicsWithRandomObstacles task. Especially important are the object, and obstacle related variables. For the newly implemented tasks the object and obstacle related variables (e.g.:_object_enable, _object_type, _object_dimension_volume, obstacle_type, etc.) define the properties of the goal point and the obstacle (where it is spawned, what it looks like etc.).  The standarts values are restricting the possible spawning volume of object and obstalce to a small volume, to keep the observation space for the RL-Agent small. For a more general solution the spawning volume of both should be the same size as the workspace of the robot. 
 </details>
 
 
-
-
+ <details><summary>Possible extensions (click to expand)</summary>
+  From the author's point future work could focus on:
+  - enlarging the spawning volume of obstacle and goal point
+  - Adding more than 1 obstacle
+  - Adding moving obstacles
+  - Adding moving goal points
+  - Adding obstacles of complex shape
+  - Comparing the RL-Learing Approach for path planning with classic approaches to path planning
+  - Making the task more complex by sensing the obstacle space via a camera (as it's done in the grasp task), instead of getting the positions of the obstacles via the gazebo API
+</details>
 <details><summary>Training New Agents (click to expand)</summary>
 
  ### Domain Randomization
