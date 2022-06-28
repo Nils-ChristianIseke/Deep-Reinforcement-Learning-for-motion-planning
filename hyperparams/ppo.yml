@@ -1,18 +1,18 @@
-IK-Gazebo-v0:
-  env_wrapper:
-        robot_random_joint_positions: False
-        invisible_world_bottom_collision_plane: False
-        visualise_workspace: False
-        visualise_spawn_volume: True
-  normalize: true
-  # n_envs: 16
-  n_timesteps: !!float 1.5e5
-  policy: 'MlpPolicy'
-  n_steps: 256
-  gae_lambda: 0.94
-  gamma: 0.99
-  n_epochs: 4
-  ent_coef: 0.0
+# IK-Gazebo-v0:
+#   env_wrapper:
+#         robot_random_joint_positions: False
+#         invisible_world_bottom_collision_plane: False
+#         visualise_workspace: False
+#         visualise_spawn_volume: True
+#   normalize: true
+#   # n_envs: 16
+#   n_timesteps: !!float 1.5e5
+#   policy: 'MlpPolicy'
+#   n_steps: 256
+#   gae_lambda: 0.94
+#   gamma: 0.99
+#   n_epochs: 4
+#   ent_coef: 0.0
 # IK-Gazebo-v0:
 #   policy: "MlpPolicy"
 #   policy_kwargs:
@@ -39,3 +39,14 @@ IK-Gazebo-v0:
 #   # noise_type: "normal"
 #   # noise_std: 0.025
 #   # optimize_memory_usage: True
+IK-Gazebo-v0:
+  env_wrapper:
+    - drl_grasping.envs.randomizers.ManipulationGazeboEnvRandomizer:
+        robot_random_joint_positions: False
+        invisible_world_bottom_collision_plane: False
+        visualise_workspace: False
+        visualise_spawn_volume: True
+  normalize: true
+  n_timesteps: !!float 1.5e5
+  policy: 'MlpPolicy'
+  ent_coef: .0

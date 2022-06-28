@@ -28,8 +28,8 @@ ROBOT_MODEL="panda"
 #ALGO="tqc"
 #ALGO="sac"
 #ALGO="td3"
-#ALGO="ppo"
-ALGO="a2c"
+ALGO="ppo"
+#ALGO="a2c"
 ## Path to trained agent (to continue training)
 # TRAINED_AGENT=""${ENV_ID}"_10/rl_model_600000_steps.zip"
 
