@@ -14,8 +14,6 @@ In our Extension of the fantastic work of [AndrejOrsula](https://github.com/Andr
 The following animations are showing some results using the Panda robotic arm.
 <p align="left" float="middle">
   <img width="40.0%" src="https://github.com/Nils-ChristianIseke/deepRLIK/blob/main/gifs/IK_TQC_100000.gif" alt="Evaluation of a trained policy on the InverseKinematic Task"/>
-</p>
-<p align="right" float="middle">
   <img width="40.0%" src="https://github.com/Nils-ChristianIseke/deepRLIK/blob/main/gifs/IK_WO_TQC_400000.gif" alt="Evaluation of a trained policy on the InverseKinematicTaskWithRandomObstacles"/>
 </p>
 
