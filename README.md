@@ -13,10 +13,10 @@ In our Extension of the fantastic work of [AndrejOrsula](https://github.com/Andr
 </details>
 The following animations are showing some results using the Panda robotic arm.
 <p align="center" float="middle">
-  <img width="100.0%" src="https://github.com/Nils-ChristianIseke/deepRLIK/blob/main/gif_github/400000.gif" alt="Evaluation of a trained policy on novel scenes for Panda robot"/>
+  <img width="100.0%" src="https://github.com/Nils-ChristianIseke/deepRLIK/blob/main/gifs/IK_TQC_100000.gif" alt="Evaluation of a trained policy on the InverseKinematic Task"/>
 </p>
 <p align="center" float="middle">
-  <img width="100.0%" src="https://github.com/AndrejOrsula/master_thesis/raw/media/media/webp/sim_ur5_rg2.webp" alt="Evaluation of a trained policy on novel scenes for UR5 robot"/>
+  <img width="100.0%" src="https://github.com/Nils-ChristianIseke/deepRLIK/blob/main/gifs/IK_WO_TQC_400000.gif" alt="Evaluation of a trained policy on the InverseKinematicTaskWithRandomObstacles"/>
 </p>
 
 Disclaimer: These instruction are based on the [original Repository](https://github.com/AndrejOrsula) and were adjusted to the Extension we are providing.
