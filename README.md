@@ -13,7 +13,7 @@ In our Extension of the fantastic work of [AndrejOrsula](https://github.com/Andr
 </details>
 The following animations are showing some results using the Panda robotic arm.
 <p align="center" float="middle">
-  <img width="100.0%" src="https://github.com/AndrejOrsula/master_thesis/raw/media/media/webp/sim_panda.webp" alt="Evaluation of a trained policy on novel scenes for Panda robot"/>
+  <img width="100.0%" src="https://github.com/Nils-ChristianIseke/deepRLIK/blob/main/gif_github/400000.gif" alt="Evaluation of a trained policy on novel scenes for Panda robot"/>
 </p>
 <p align="center" float="middle">
   <img width="100.0%" src="https://github.com/AndrejOrsula/master_thesis/raw/media/media/webp/sim_ur5_rg2.webp" alt="Evaluation of a trained policy on novel scenes for UR5 robot"/>
