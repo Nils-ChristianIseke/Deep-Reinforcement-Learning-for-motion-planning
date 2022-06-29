@@ -1,13 +1,15 @@
 # Deep Reinforcement Learning for motion planning
-This repository is an extesion of: [drl_grasping](https://github.com/AndrejOrsula/drl_grasping). Please read through it's [README](https://github.com/AndrejOrsula/drl_grasping). 
+This repository is an extesion of: [drl_grasping](https://github.com/AndrejOrsula/drl_grasping). Please read through the [README](https://github.com/AndrejOrsula/drl_grasping) of the original repo first! This is necessary to understand this README.
+We have deliberately chosen to focus this README only on the changes that we implemented.
 
 
-In our Extension of the fantastic work of [AndrejOrsula](https://github.com/AndrejOrsula) we added new Environments:
+In our Extension of the fantastic work of [AndrejOrsula](https://github.com/AndrejOrsula) we added few new Environments:
 <details><summary>Newly added Environments (click to expand)</summary>
   
   1. InverseKinematics
   2. InverseKinematicsWithObstacles
-  3. InverseKonematicsWithRandomObstacles
+  3. InverseKinematicsWithRandomObstacles
+  4. InverseKinematicsWithManyRandomObstcles
   4. ReachWithObstacles
 
 </details>
@@ -18,39 +20,22 @@ The following animations are showing some results using the Panda robotic arm.
 </p>
 
 Disclaimer: These instruction are based on the [original Repository](https://github.com/AndrejOrsula) and were adjusted to the Extension we are providing.
-We added some parts and deleted parts which are not relevant for our contribution.
 
-##Instructions
+## Instructions
 
 ### Requirements
-
-- **GPU:** CUDA is required to process octree observations on GPU.
-  - Everything else should function normally on CPU, i.e. environments with other observation types.
-- VS Code
-  - Remote Containers
-
+Take a look at the requirement section of the original [repository](https://github.com/AndrejOrsula/drl_grasping)
 
 ### Dependencies
+Take a look at the the depenencies section of the original repository [repository](https://github.com/AndrejOrsula/drl_grasping)
 
-Before starting, make sure your system has a setup for using [Nvidia Docker](https://github.com/NVIDIA/nvidia-docker), e.g.:
-
-```bash
-# Docker
-curl https://get.docker.com | sh \
-  && sudo systemctl --now enable docker
-# Nvidia Docker
-distribution=$(. /etc/os-release; echo $ID$VERSION_ID) \
-  && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \
-  && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
-sudo apt-get update && sudo apt-get install -y nvidia-docker2
-sudo systemctl restart docker
-```
 
 ### Docker Instructions
-1. Pull this repo.
+1. Pull this repository.
+```git pull <link_to_repository>```
 2. Get the docker image:
 
-
+#### VS CODE Remote Containers
 One convinient way to edit the code e.g.: changing the reward function, or adding new tasks, is by connecting VS-Code to the container:
   1. Install [VS Code](https://code.visualstudio.com/download)
   2. Install the VS Code Extension [Remote Containers](https://code.visualstudio.com/docs/remote/containers)
@@ -69,46 +54,27 @@ One convinient way to edit the code e.g.: changing the reward function, or addin
   ```bash
       cd /root/drl_grasping/drl_grasping/src/drl_grasping
    ```
+   Now you are at the root of the ROS-Package.
    
-<details><summary>Training New Agents (click to expand)</summary>
 
 
 ### Training of Agent
 
-To train your own agent, you can start with the [`ex_train.bash`](examples/ex_train.bash) example. You can customise this example script,  configuration of the environment and all hyperparameters to your needs (see below). By default, headless mode is used during training to reduce computational load. If you want to see what is going on, you need to uncomment 'model.env.render("human")' in train.py (deepRLIK/scripts/train.py). 
+Take a look at the the Training of Agent section of the original repository [repository](https://github.com/AndrejOrsula/drl_grasping)
+
+If you want to see what is going on, you need to uncomment 'model.env.render("human")' in train.py (deepRLIK/scripts/train.py).
 
 ```bash
 ros2 run drl_grasping ex_train.bash
 ```
   
-</details>
+
 
 ## Environments
 
-This repository contains environments for robotic manipulation that are compatible with [OpenAI Gym](https://github.com/openai/gym). All of these make use of [Ignition Gazebo](https://ignitionrobotics.org) robotic simulator, which is interfaced via [Gym-Ignition](https://github.com/robotology/gym-ignition).
+Take a look at the the Enviroment section of the original repository [repository](https://github.com/AndrejOrsula/drl_grasping)
 
-Currently, the following environments are included inside this repository:
-
-<details><summary>Original Environments (click to expand)</summary>
-
-  - [Grasp](drl_grasping/envs/tasks/grasp) task
-    - Observation variants
-      - [GraspOctree](drl_grasping/envs/tasks/grasp/grasp_octree.py), with and without color features
-      - GraspColorImage (RGB image) and GraspRgbdImage (RGB-D image) are implemented on [image_obs](https://github.com/AndrejOrsula/drl_grasping/tree/image_obs) branch. However, their implementation is currently only for testing and comparative purposes.
-    - Curriculum Learning: Task includes [GraspCurriculum](drl_grasping/envs/tasks/grasp/curriculum.py), which can be used to progressively increase difficulty of the task by automatically adjusting the following environment parameters based on the current success rate.
-      - Workspace size
-      - Number of objects
-      - Termination state (task is divided into hierarchical sub-tasks with aim to further guide the agent).
-      - This part does not bring any improvements based on experimental results, so do not bother using it.
-    - Demonstrations: Task contains a simple scripted policy that can be applied to collect demonstrations, which can then be used to pre-load a replay buffer for training with off-policy RL algorithms.
-      - It provides a slight increase for early learning, however, experiments indicate that it degrades the final success rate (probably due to introduction of bias early on). Therefore, do not use demonstrations if possible, at least not with this environment.
-  - [Reach](drl_grasping/envs/tasks/reach) task (a simplistic environment for testing stuff)
-    - Observation variants
-      - [Reach](drl_grasping/envs/tasks/reach/reach.py) - simulation states
-      - [ReachColorImage](drl_grasping/envs/tasks/reach/reach_color_image.py)
-      - [ReachDepthImage](drl_grasping/envs/tasks/reach/reach_depth_image.py)
-      - [ReachOctree](drl_grasping/envs/tasks/reach/reach_octree.py), with and without color features
-  </details>
+We added the following enviroments, to the original repository:
   
   <details><summary>New Environments (Work of this project) (click to expand)</summary>
 
@@ -129,6 +95,11 @@ Currently, the following environments are included inside this repository:
     Environment: The environment contains the robotic arm, a randomly spawned goal point and an obstacle.
     Observation: Position of the goal point, the endeffector of the robotic arm and position + orientation of the obstacle
     Action: The joint angles of the robotic arm.
+   [InverseKinematicsWithManyRandomObstacles](drl_grasping/envs/tasks/inverse_kinematics_with_obstacles.py)
+      -Description: The agents goal is to calculate the necessary joint angles of the robotic arm to reach a random goal point, while avoiding collisions with an obstacle
+    Environment: The environment contains the robotic arm, a randomly spawned goal point as well as a number of obstacles.
+    Observation: Position of the goal point, the endeffector of the robotic arm and position + orientation of the obstacles
+    Action: The joint angles of the robotic arm.
   - [Reach](drl_grasping/envs/tasks/reach) task (extension of the orginal Reach Task)
       - [ReachWithObstacles](drl_grasping/envs/tasks/reach/reach.py)
     -Description: The agents goal is to calculate the necessary goal positions to move the robotic arm to reach a random goal point, while avoiding collisions with an obstacle. The inverse kinematic is calculated via MOVEIT!.
@@ -138,7 +109,7 @@ Currently, the following environments are included inside this repository:
   
   
   
-  Inside the definition of each class some variables can be set, e.g.: For the InverseKinematicsWithRandomObstacles task. Especially important are the object, and obstacle related variables. For the newly implemented tasks the object and obstacle related variables (e.g.:_object_enable, _object_type, _object_dimension_volume, obstacle_type, etc.) define the properties of the goal point and the obstacle (where it is spawned, what it looks like etc.).  The standarts values are restricting the possible spawning volume of object and obstalce to a small volume, to keep the observation space for the RL-Agent small. For a more general solution the spawning volume of both should be the same size as the workspace of the robot. 
+  Inside the definition of each class some variables can be set, e.g.: For the InverseKinematicsWithRandomObstacles task. Especially important are the object, and obstacle related variables. For the newly implemented tasks the object and obstacle related variables (e.g.:_object_enable, _object_type, _object_dimension_volume, obstacle_type, etc.) define the properties of the goal point and the obstacle (where it is spawned, what it looks like etc.).  The standarts values are restricting the possible spawning volume of object and obstalce to a small volume. Thus keeping the observation space small. (Faster training). For a more general solution the spawning volume of both should be the same size as the workspace of the robot. 
 </details>
 
 
