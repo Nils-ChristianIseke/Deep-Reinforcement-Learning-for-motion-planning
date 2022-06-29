@@ -20,9 +20,7 @@ The following animations are showing some results using the Panda robotic arm.
 Disclaimer: These instruction are based on the [original Repository](https://github.com/AndrejOrsula) and were adjusted to the Extension we are providing.
 We added some parts and deleted parts which are not relevant for our contribution.
 
-## Instructions
-
-
+##Instructions
 
 ### Requirements
 
@@ -54,26 +52,15 @@ sudo apt-get update && sudo apt-get install -y nvidia-docker2
 sudo systemctl restart docker
 ```
 
-### Pre-built Docker Image
+###Docker Instructions
+1. Pull this repo.
+2. Get the docker image which will be provided to you on request, as a .tar file.
+Download it and execute:
+```docker load -i <path to docker image tar file>```
+3. Navigate to the docker dir of this repo and execute:
+  ``` docker load -i <path to docker image .tar file>```
 
-The easiest way to try out this project is by using a pre-built Docker image that can be pulled from [Docker Hub](https://hub.docker.com/repository/docker/andrejorsula/drl_grasping). Currently, there is only a development image available that also contains the default testing datasets (huge, but it is easy to use and allows editing and recompiling). You can pull the `latest` tag with the following command. Alternatively, each release has also its associated tag, e.g. `1.0.0`.
-
-```bash
-docker pull andrejorsula/drl_grasping:latest
-```
-
-For running of the container, please use the included [docker/run.bash](docker/run.bash) script that is included with this repo. It significantly simplifies the setup with volumes and allows use of graphical interfaces for Ignition Gazebo GUI client and RViZ.
-
-Open a Terminal and cd to the directory where the run.bash is located:
-```bash
-  cd drl_grasping dir/docker
-  ```
-Execute run.bash:
-```bash
-./run.bash andrejorsula/drl_grasping:latest /bin/bash
-```
-
-The easiest way to edit the code e.g.: changing the reward function, or adding new tasks, is by connecting VS-Code to the container:
+One convinient way to edit the code e.g.: changing the reward function, or adding new tasks, is by connecting VS-Code to the container:
   1. Install [VS Code](https://code.visualstudio.com/download)
   2. Install the VS Code Extension [Remote Containers](https://code.visualstudio.com/docs/remote/containers)
 
@@ -85,7 +72,7 @@ The easiest way to edit the code e.g.: changing the reward function, or adding n
     ```
     
     ```bash
-      ./run.bash andrejorsula/drl_grasping:latest /bin/bash
+      ./run.bash rl_motion_planning /bin/bash
     ```)
   2. Connecting to the container as described [here](https://code.visualstudio.com/docs/remote/containers)
   3. cd to dlr_grasping:
