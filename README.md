@@ -37,6 +37,7 @@ Take a look at the the depenencies section of the original repository [repositor
 1. Pull this repository.
 ```git pull <link_to_repository>```
 2. Get the docker image:
+3. docker pull slin25/rl_motion_planning
 
 #### VS CODE Remote Containers
 One convinient way to edit the code e.g.: changing the reward function, or adding new tasks, is by connecting VS-Code to the container:
