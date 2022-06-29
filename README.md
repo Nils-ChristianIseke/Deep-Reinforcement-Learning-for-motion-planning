@@ -48,11 +48,8 @@ sudo systemctl restart docker
 
 ### Docker Instructions
 1. Pull this repo.
-2. Get the docker image which will be provided to you on request, as a .tar file.
-Download it and execute:
-```docker load -i <path to docker image tar file>```
-3. Navigate to the docker dir of this repo and execute:
-  ``` docker load -i <path to docker image .tar file>```
+2. Get the docker image:
+
 
 One convinient way to edit the code e.g.: changing the reward function, or adding new tasks, is by connecting VS-Code to the container:
   1. Install [VS Code](https://code.visualstudio.com/download)
@@ -63,7 +60,7 @@ One convinient way to edit the code e.g.: changing the reward function, or addin
     
   ```bash
       cd drl_grasping dir/docker
-      sudo ./run.bash rl_motion_planning /bin/bash
+      sudo ./run.bash slin25/rl_motion_planning /bin/bash
    ```
 
   2. Connecting to the container as described [here](https://code.visualstudio.com/docs/remote/containers)
