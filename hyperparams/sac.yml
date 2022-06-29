@@ -244,7 +244,7 @@ IK-Gazebo-v0:
         invisible_world_bottom_collision_plane: False
         visualise_workspace: False
         visualise_spawn_volume: True
-  n_timesteps: 1500000
+  n_timesteps: 50000
   buffer_size: 25000
   learning_starts: 0
   batch_size: 32
@@ -285,26 +285,3 @@ IK-Gazebo-v0:
 #   noise_std: 0.025
 #   optimize_memory_usage: True
 
-IK-WO-Gazebo-v0:
-  policy: "MlpPolicy"
-  policy_kwargs:
-    n_critics: 2
-    net_arch: [128, 64]
-  env_wrapper:
-    - drl_grasping.envs.randomizers.ManipulationGazeboEnvRandomizer:
-        robot_random_joint_positions: True
-        robot_random_joint_positions_std: 0.1
-  n_timesteps: 50000
-  buffer_size: 25000
-  learning_starts: 0
-  batch_size: 32
-  learning_rate: lin_0.0003
-  gamma: 0.95
-  tau: 0.01
-  ent_coef: "auto_0.1"
-  target_entropy: "auto"
-  train_freq: 1
-  gradient_steps: 1
-  noise_type: "normal"
-  noise_std: 0.025
-  optimize_memory_usage: True

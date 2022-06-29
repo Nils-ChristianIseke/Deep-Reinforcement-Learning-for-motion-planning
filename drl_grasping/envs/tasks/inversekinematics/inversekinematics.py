@@ -144,6 +144,41 @@ class InverseKinematics(Manipulation, abc.ABC):
         # Return the observation
         return observation
 
+    # def get_reward(self) -> Reward:
+    #     """Calculating the reward. 
+    #     Dense reward:
+    #     A poisitve reward is assigned when getting closer to the target the in the previous step. A negative reward is assigned when the distance to the target
+    #     increases. As soon as the robot collides with an obstacle a negative reward is assigned. For reaching the goal point, a positive reward is assigned.
+    #     Sparse Reward:
+    #     A reward is only assigned if the robot reaches the goal or collides with an obstacle.
+
+    #     Returns:
+    #         Reward: _description_
+    #     """
+    #     reward = 0.0
+
+    #     # Compute the current distance to the target
+    #     current_distance = self.get_distance_to_target()
+
+    #     # Mark the episode done if target is reached
+    #     if current_distance < self._required_accuracy:
+    #         self._is_done = True
+    #         reward += 1/(current_distance)**2
+    #         # if self._sparse_reward:
+    #         #     reward += 1.0
+
+    #     # Give reward based on how much closer robot got relative to the target for dense reward
+    #     if not self._sparse_reward:
+    #         reward += min(1/(current_distance)**2,1/(self._required_accuracy)**2)
+            
+    #         self._previous_distance = current_distance
+
+    #     # Act quickly reward is assigned for rewarding a fast solution (steps) (if enabled)
+    #     reward -= self._act_quick_reward
+    #     if self._verbose:
+    #         print(f"reward: {reward}")
+
+    #     return Reward(reward)
     def get_reward(self) -> Reward:
         """Calculating the reward. 
         Dense reward:
@@ -163,17 +198,16 @@ class InverseKinematics(Manipulation, abc.ABC):
         # Mark the episode done if target is reached
         if current_distance < self._required_accuracy:
             self._is_done = True
-            reward += 1/(current_distance)**2
+            
             # if self._sparse_reward:
-            #     reward += 1.0
+            reward += 1.0
 
         # Give reward based on how much closer robot got relative to the target for dense reward
         if not self._sparse_reward:
-            reward += min(1/(current_distance)**2,1/(self._required_accuracy)**2)
-            
+            reward += self._previous_distance - current_distance
             self._previous_distance = current_distance
 
-        # Act quickly reward is assigned for rewarding a fast solution (steps) (if enabled)
+        # Subtract a small reward each step to provide incentive to act quickly (if enabled)
         reward -= self._act_quick_reward
         if self._verbose:
             print(f"reward: {reward}")

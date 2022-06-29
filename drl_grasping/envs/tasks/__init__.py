@@ -208,7 +208,7 @@ register(
             'verbose': False})
 
 
-IK_MAX_EPISODE_STEPS: int = 1
+IK_MAX_EPISODE_STEPS: int = 100
 IK_AGENT_RATE: float = 2.5
 IK_PHYSICS_RATE: float = 100.0
 IK_RTF: float = 100.0
@@ -234,7 +234,7 @@ register(
 IK_WO_MAX_EPISODE_STEPS: int = 100
 IK_WO_AGENT_RATE: float = 2.5
 IK_WO_PHYSICS_RATE: float = 250.0
-IK_WO_RTF: float = 1.0
+IK_WO_RTF: float = 100.0
 register(
     id='IK-WO-Gazebo-v0',
     entry_point='gym_ignition.runtimes.gazebo_runtime:GazeboRuntime',

@@ -7,8 +7,10 @@
     - auto_0.1
   - - env_wrapper
     - - drl_grasping.envs.randomizers.ManipulationGazeboEnvRandomizer:
+          invisible_world_bottom_collision_plane: false
           robot_random_joint_positions: false
-          robot_random_joint_positions_std: 0.1
+          visualise_spawn_volume: true
+          visualise_workspace: false
   - - gamma
     - 0.95
   - - gradient_steps
@@ -18,7 +20,7 @@
   - - learning_starts
     - 0
   - - n_timesteps
-    - 150000
+    - 1500000
   - - noise_std
     - 0.025
   - - noise_type

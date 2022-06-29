@@ -48,7 +48,7 @@
   - - tensorboard_log
     - training/IK-Gazebo-v0/tensorboard_logs
   - - trained_agent
-    - training/IK-Gazebo-v0/logs/sac/IK-Gazebo-v0_8/rl_model_140000_steps.zip
+    - ''
   - - truncate_last_trajectory
     - true
   - - uuid

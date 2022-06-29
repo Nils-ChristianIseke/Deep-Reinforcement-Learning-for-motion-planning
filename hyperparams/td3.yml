@@ -244,7 +244,7 @@ IK-Gazebo-v0:
         invisible_world_bottom_collision_plane: False
         visualise_workspace: False
         visualise_spawn_volume: True
-  n_timesteps: 1500000
+  n_timesteps: 50000
   buffer_size: 25000
   learning_starts: 0
   batch_size: 32

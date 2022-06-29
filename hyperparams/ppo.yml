@@ -47,6 +47,6 @@ IK-Gazebo-v0:
         visualise_workspace: False
         visualise_spawn_volume: True
   normalize: true
-  n_timesteps: !!float 1.5e5
+  n_timesteps:  50000
   policy: 'MlpPolicy'
   ent_coef: .0

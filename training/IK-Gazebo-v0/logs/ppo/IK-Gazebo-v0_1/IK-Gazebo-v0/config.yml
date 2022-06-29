@@ -8,7 +8,7 @@
           visualise_spawn_volume: true
           visualise_workspace: false
   - - n_timesteps
-    - 150000.0
+    - 50000
   - - normalize
     - true
   - - policy
