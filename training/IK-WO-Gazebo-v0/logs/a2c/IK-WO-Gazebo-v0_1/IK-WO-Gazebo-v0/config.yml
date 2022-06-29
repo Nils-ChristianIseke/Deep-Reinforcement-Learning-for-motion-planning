@@ -1,0 +1,14 @@
+!!python/object/apply:collections.OrderedDict
+- - - ent_coef
+    - 0.0
+  - - env_wrapper
+    - - drl_grasping.envs.randomizers.ManipulationGazeboEnvRandomizer:
+          invisible_world_bottom_collision_plane: false
+          robot_random_joint_positions: false
+          visualise_spawn_volume: true
+  - - n_timesteps
+    - 1000000.0
+  - - normalize
+    - true
+  - - policy
+    - MlpPolicy

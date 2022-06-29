@@ -91,10 +91,12 @@ class Manipulation(task.Task, abc.ABC):
          _object_spawn_volume_proportion*_workspace_volume[1],
          _object_spawn_volume_proportion*_workspace_volume[2])
     _object_quat_xyzw: Tuple[float, float, float, float] = (0, 0, 0, 1)
+    _obstacle_enable: bool = False
     _obstacle_spawn_volume: Tuple[float, float, float] = \
          (0,
           0,
           0)
+    _obstacle_count =0 
     _insert_scene_broadcaster_plugin: bool = True
     _insert_user_commands_plugin: bool = True
 

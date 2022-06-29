@@ -388,22 +388,26 @@ class ManipulationGazeboEnvRandomizer(gazebo_env_randomizer.GazeboEnvRandomizer,
                     task: SupportedTasks,
                     gazebo:scenario.GazeboSimulator):
         obstacle_model=None
-        if 'box' == task._obstacle_type:
-            obstacle_model = models.Box(world=task.world,
-                                      position=task._obstacle_spawn_centre,
-                                      orientation=quat_to_wxyz(
-                                          task._obstacle_quat_xyzw),
-                                      size=task._obstacle_dimensions,
-                                      mass=task._obstacle_mass,
-                                      collision=task._obstacle_collision,
-                                      visual=task._obstacle_visual,
-                                      static=task._obstacle_static,
-                                      color=task._obstacle_color)
-        task.obstacle_names.append(obstacle_model.name())
-        # Enable contact detection
-        link = obstacle_model.to_gazebo().get_link(
-            link_name=obstacle_model.link_names()[0])
-        link.enable_contact_detection(True)
+        for i in range(0,task._obstacle_count):
+            if 'box' == task._obstacle_type:
+                position, quat_random = self.get_random_object_pose(centre=task._obstacle_spawn_centre,
+                                                                volume=task._obstacle_spawn_volume,
+                                                                np_random=task.np_random)
+                obstacle_model = models.Box(world=task.world,
+                                        position=task._obstacle_spawn_centre,
+                                        orientation=quat_to_wxyz(
+                                            task._obstacle_quat_xyzw),
+                                        size=task._obstacle_dimensions,
+                                        mass=task._obstacle_mass,
+                                        collision=task._obstacle_collision,
+                                        visual=task._obstacle_visual,
+                                        static=task._obstacle_static,
+                                        color=task._obstacle_color)
+                task.obstacle_names.append(obstacle_model.name())
+            # Enable contact detection
+            link = obstacle_model.to_gazebo().get_link(
+                link_name=obstacle_model.link_names()[0])
+            link.enable_contact_detection(True)
 
     
     def add_invisible_world_bottom_collision_plane(self,
@@ -732,6 +736,7 @@ class ManipulationGazeboEnvRandomizer(gazebo_env_randomizer.GazeboEnvRandomizer,
             model = task.world.get_model(object_name).to_gazebo()
             self.__object_positions[object_name] = model.get_link(
                 link_name=model.link_names()[0]).position()
+        
 
         for object_name in self.task.object_names:
             obj = task.world.get_model(object_name).to_gazebo()
@@ -748,7 +753,26 @@ class ManipulationGazeboEnvRandomizer(gazebo_env_randomizer.GazeboEnvRandomizer,
                     obj.reset_base_world_velocity([0.0, 0.0, 0.0],
                                                   [0.0, 0.0, 0.0])
                     return False
-
+        
+        for obstacle_name in self.task.obstacle_names:
+            model = task.world.get_model(obstacle_name).to_gazebo()
+            self.__object_positions[obstacle_name] = model.get_link(
+                link_name=model.link_names()[0]).position()
+        for obstacle_name in self.task.obstacle_names:
+            obj = task.world.get_model(obstacle_name).to_gazebo()
+            for contact in obj.contacts():
+                depth = np.mean([point.depth for point in contact.points])
+                if task.ground_name in contact.body_b and depth < ground_allowed_penetration_depth:
+                        continue
+                if task.robot_name in contact.body_b or depth > allowed_penetration_depth:
+                    position, quat_random = self.get_random_object_pose(centre=task._obstacle_spawn_centre,
+                                                                        volume=task._obstacle_spawn_volume,
+                                                                        np_random=task.np_random,
+                                                                        name=obstacle_name)
+                    obj.reset_base_pose(position, self.task._obstacle_quat_xyzw)
+                    obj.reset_base_world_velocity([0.0, 0.0, 0.0],
+                                                  [0.0, 0.0, 0.0])
+                    return False
         return True
 
     # ============================

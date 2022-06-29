@@ -1,3 +1,4 @@
 from .inversekinematics import InverseKinematics
 from .inversekinematics_with_obstacles import InverseKinematicsWithObstacles
 from .inversekinematics_with_moving_obstacles import InverseKinematicsWithMovingObstacles
+from .inversekinematics_with_many_moving_obstacles import InverseKinematicsWithManyMovingObstacles

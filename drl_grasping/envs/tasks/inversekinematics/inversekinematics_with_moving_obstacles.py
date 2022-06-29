@@ -54,7 +54,7 @@ class InverseKinematicsWithMovingObstacles(Manipulation, abc.ABC):
     _obstacle_random_pose_spawn = True                   
     _obstacle_random_poistion_spawn = True
     _obstacle_random_orientation_spawn = False
-    
+    _obstacle_count =1
     
     
     _ground_enable:bool = True
@@ -379,6 +379,9 @@ class InverseKinematicsWithMovingObstacles(Manipulation, abc.ABC):
         return False
 
     def check_obstacle_collision(self) -> bool:
+        """
+        Returns true if robot links are in collision with an obstacle.
+        """
         for obstacle_name in self.obstacle_names:
             obstacle = self.world.get_model(obstacle_name)
             for contact in obstacle.contacts():
