@@ -1,4 +1,4 @@
-# Deep Reinforcement Learning for inverse Kinematics
+# Deep Reinforcement Learning for motion planning
 This repository is an extesion of: [drl_grasping](https://github.com/AndrejOrsula/drl_grasping). Please read through it's [README](https://github.com/AndrejOrsula/drl_grasping). 
 
 
@@ -20,23 +20,15 @@ The following animations are showing some results using the Panda robotic arm.
 Disclaimer: These instruction are based on the [original Repository](https://github.com/AndrejOrsula) and were adjusted to the Extension we are providing.
 We added some parts and deleted parts which are not relevant for our contribution.
 
-## Instructions
-
-
+##Instructions
 
 ### Requirements
 
 - **GPU:** CUDA is required to process octree observations on GPU.
   - Everything else should function normally on CPU, i.e. environments with other observation types.
 - VS Code
-- Remote Containers
-<details><summary> Developing with Docker (click to expand)</summary>
+  - Remote Containers
 
-### Requirements
-
-- **OS:** Any system that supports [Docker](https://docs.docker.com/get-docker) should work (Linux, Windows, macOS).
-  - Only Ubuntu 22.04 was tested.
-- **GPU:** CUDA is required to process octree observations on GPU. Therefore, only Docker images with CUDA support are currently available.
 
 ### Dependencies
 
@@ -54,55 +46,30 @@ sudo apt-get update && sudo apt-get install -y nvidia-docker2
 sudo systemctl restart docker
 ```
 
-### Pre-built Docker Image
+### Docker Instructions
+1. Pull this repo.
+2. Get the docker image:
 
-The easiest way to try out this project is by using a pre-built Docker image that can be pulled from [Docker Hub](https://hub.docker.com/repository/docker/andrejorsula/drl_grasping). Currently, there is only a development image available that also contains the default testing datasets (huge, but it is easy to use and allows editing and recompiling). You can pull the `latest` tag with the following command. Alternatively, each release has also its associated tag, e.g. `1.0.0`.
 
-```bash
-docker pull andrejorsula/drl_grasping:latest
-```
-
-For running of the container, please use the included [docker/run.bash](docker/run.bash) script that is included with this repo. It significantly simplifies the setup with volumes and allows use of graphical interfaces for Ignition Gazebo GUI client and RViZ.
-
-Open a Terminal and cd to the directory where the run.bash is located:
-```bash
-  cd drl_grasping dir/docker
-  ```
-Execute run.bash:
-```bash
-./run.bash andrejorsula/drl_grasping:latest /bin/bash
-```
-
-The easiest way to edit the code e.g.: changing the reward function, or adding new tasks, is by connecting VS-Code to the container:
+One convinient way to edit the code e.g.: changing the reward function, or adding new tasks, is by connecting VS-Code to the container:
   1. Install [VS Code](https://code.visualstudio.com/download)
   2. Install the VS Code Extension [Remote Containers](https://code.visualstudio.com/docs/remote/containers)
 
   Now you can start developing inside the container by:
-  1. Starting a container (As described above: 
-    
-    ```bash
-      cd drl_grasping dir/docker
-    ```
-    
-    ```bash
-      ./run.bash andrejorsula/drl_grasping:latest /bin/bash
-    ```)
-  2. Connecting to the container as described [here](https://code.visualstudio.com/docs/remote/containers)
-  3. cd to dlr_grasping:
+  1. Starting the container: 
     
   ```bash
-    cd /root/drl_grasping/drl_grasping/src/drl_grasping
+      cd drl_grasping dir/docker
+      sudo ./run.bash slin25/rl_motion_planning /bin/bash
    ```
-  4. Start developing :) If you want another terminal e.g. for running tensorboard, open a new terminal and execute: 
-    ```bash
-      docker exec -ti container_id bash
-    ```
-    Where container_id is the id of the container, which is shown by executing:
-    ```bash
-      docker ps
-    ```
-  
-  
+
+  2. Connecting to the container as described [here](https://code.visualstudio.com/docs/remote/containers)
+  3. inside the condatiner cd to the ros package dlr_grasping:
+    
+  ```bash
+      cd /root/drl_grasping/drl_grasping/src/drl_grasping
+   ```
+   
 <details><summary>Training New Agents (click to expand)</summary>
 
 
@@ -113,16 +80,6 @@ To train your own agent, you can start with the [`ex_train.bash`](examples/ex_tr
 ```bash
 ros2 run drl_grasping ex_train.bash
 ```
-
-### Enjoying of Trained Agents
-
-To enjoy an agent that you have trained yourself, look into [`ex_enjoy.bash`](examples/ex_enjoy.bash) example. Similar to training, change the environment ID, algorithm and robot model. Furthermore, select a specific checkpoint that you want to run. RViZ 2 and Ignition Gazebo GUI client are enabled by default.
-
-```bash
-ros2 run drl_grasping ex_enjoy.bash
-```
-
-</details>
   
 </details>
 
@@ -130,7 +87,7 @@ ros2 run drl_grasping ex_enjoy.bash
 
 This repository contains environments for robotic manipulation that are compatible with [OpenAI Gym](https://github.com/openai/gym). All of these make use of [Ignition Gazebo](https://ignitionrobotics.org) robotic simulator, which is interfaced via [Gym-Ignition](https://github.com/robotology/gym-ignition).
 
-Currently, the following environments are included inside this repository. Take a look at their [gym environment registration](drl_grasping/envs/tasks/__init__.py) and source code if you are interested in configuring them. There is a lot of parameters trying different RL approaches and techniques, so it is currently a bit messy (might get cleaned up if I have some free time for it).
+Currently, the following environments are included inside this repository:
 
 <details><summary>Original Environments (click to expand)</summary>
 
@@ -185,18 +142,7 @@ Currently, the following environments are included inside this repository. Take 
 </details>
 
 
- <details><summary>Future Work (click to expand)</summary>
- From the author's point future work could focus on:
-  
-  - enlarging the spawning volume of obstacle and goal point
-  - Adding more than 1 obstacle
-  - Adding moving obstacles and goal_points
-  - Adding obstacles of complex shape
-  - Comparing the RL-Learning Approach for path planning with classic approaches of path planning
-  - Making the task more complex by sensing the obstacle space via a camera (as it's done in the grasp task), instead of getting the positions of the obstacles via the gazebo API
-  - Autotuning Hyperparameters
-</details>
-<details><summary>Adding new environments (click to expand)</summary>
+<details><summary>Adding new environments and training the agent (click to expand)</summary>
 To implement a new task / environment, the following steps are necessary:
   
   
@@ -209,58 +155,14 @@ To implement a new task / environment, the following steps are necessary:
   7. Start the training by executing: `ros2 run drl_grasping ex_train.bash` in the running container
 </details>
 
-<details><summary>Training New Agents (click to expand)</summary>
 
- ### Domain Randomization
-
-These environments can be wrapped by a randomizer in order to introduce domain randomization and improve generalization of the trained policies, which is especially beneficial for Sim2Real transfer.
-
-<p align="center" float="middle">
-  <img width="100.0%" src="https://github.com/AndrejOrsula/master_thesis/raw/media/graphics/implementation/domain_randomisation.png" alt="Examples of domain randomization for the Grasp task"/>
-</p>
-
-The included [ManipulationGazeboEnvRandomizer](drl_grasping/envs/randomizers/manipulation.py) allows randomization of the following properties at each reset of the environment.
-
-- Object model - primitive geometry
-  - Random type (box, sphere and cylinder are currently supported)
-  - Random color, scale, mass, friction
-- Object model - mesh geometry
-  - Random type (see [Object Model Database](#object-model-database)) 
-  - Random scale, mass, friction
-- Object pose
-- Ground plane texture
-- Initial robot configuration
-- Camera pose
-
-### Supported Robots
-
-Only [Franka Emika Panda](https://github.com/AndrejOrsula/panda_ign) is supported.
-
-
-## Reinforcement Learning
-
-This project makes direct use of [stable-baselines3](https://github.com/DLR-RM/stable-baselines3) as well as [sb3_contrib](https://github.com/Stable-Baselines-Team/stable-baselines3-contrib). Furthermore, scripts for training and evaluation are largely inspired by [rl-baselines3-zoo](https://github.com/DLR-RM/rl-baselines3-zoo).
-
-### Hyperparameters
-
-Hyperparameters for training of RL agents can be found in [hyperparams](hyperparams) directory. [Optuna](https://github.com/optuna/optuna) was used to autotune some of them, but certain algorithm/environment combinations require far more tuning (especially TD3). If needed, you can try running Optuna yourself, see [`ex_optimize`](examples/ex_optimize.bash) example.
-
-## Directory Structure
-
-```bash
-├── drl_grasping        # Primary Python module of this project
-    ├── algorithms      # Definitions of policies and slight modifications to RL algorithms
-    ├── envs            # Environments for grasping (compatible with OpenAI Gym)
-        ├── tasks       # Tasks for the agent that are identical for simulation
-        ├── randomizers # Domain randomization of the tasks, which also populates the world
-        └── models      # Functional models for the environment (Ignition Gazebo)
-    ├── control         # Control for the agent
-    ├── perception      # Perception for the agent
-    └── utils           # Other utilities, used across the module
-├── examples            # Examples for training and enjoying RL agents
-├── hyperparams         # Hyperparameters for training RL agents
-├── scripts             # Helpful scripts for training, evaluating, ... 
-├── launch              # ROS 2 launch scripts that can be used to help with setup
-├── docker              # Dockerfile for this project
-└── drl_grasping.repos  # List of other dependencies created for `drl_grasping`
-```
+## Future Work
+ From the author's point future work could focus on:
+  
+  - enlarging the spawning volume of obstacle and goal point
+  - Adding more than 1 obstacle
+  - Adding moving obstacles and goal_points
+  - Adding obstacles of complex shape
+  - Comparing the RL-Learning Approach for path planning with classic approaches of path planning
+  - Making the task more complex by sensing the obstacle space via a camera (as it's done in the grasp task), instead of getting the positions of the obstacles via the gazebo API
+  - Autotuning Hyperparameters
