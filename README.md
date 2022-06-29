@@ -18,8 +18,8 @@ The naming of the environments 3 and 4 is a bit misleading. MovingObstacle refer
 </details>
 The following animations are showing some results using the Panda robotic arm.
 <p align="left" float="middle">
-  <img width="40.0%" src="https://github.com/Nils-ChristianIseke/deepRLIK/blob/main/gifs/IK_TQC_100000.webp" alt="Evaluation of a trained policy on the InverseKinematic Task"/>
-  <img width="30.0%" src="https://github.com/Nils-ChristianIseke/deepRLIK/blob/main/gifs/IK_WO_TQC_400000.webp" alt="Evaluation of a trained policy on the InverseKinematicTaskWithRandomObstacles"/>
+  <img width="35.0%" src="https://github.com/Nils-ChristianIseke/deepRLIK/blob/main/gifs/IK_TQC_100000.webp" alt="Evaluation of a trained policy on the InverseKinematic Task"/>
+  <img width="25.0%" src="https://github.com/Nils-ChristianIseke/deepRLIK/blob/main/gifs/IK_WO_TQC_400000.webp" alt="Evaluation of a trained policy on the InverseKinematicTaskWithRandomObstacles"/>
     <img width="60.0%" src="https://github.com/Nils-ChristianIseke/deepRLIK/blob/main/gifs/IKWMMO_470000_TQC.gif" alt="Evaluation of a trained policy on the InverseKinematicTaskWithRandomObstacles"/>
 </p>
 
