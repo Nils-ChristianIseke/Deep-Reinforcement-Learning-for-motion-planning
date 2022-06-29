@@ -1,4 +1,4 @@
-# Deep Reinforcement Learning for inverse Kinematics
+# Deep Reinforcement Learning for motion planning
 This repository is an extesion of: [drl_grasping](https://github.com/AndrejOrsula/drl_grasping). Please read through it's [README](https://github.com/AndrejOrsula/drl_grasping). 
 
 
@@ -61,13 +61,11 @@ One convinient way to edit the code e.g.: changing the reward function, or addin
   Now you can start developing inside the container by:
   1. Starting the container: 
     
-    ```bash
-        cd drl_grasping dir/docker
-    ```
-    
-    ```bash
+  ```bash
+      cd drl_grasping dir/docker
       sudo ./run.bash rl_motion_planning /bin/bash
-    ```)
+   ```
+
   2. Connecting to the container as described [here](https://code.visualstudio.com/docs/remote/containers)
   3. inside the condatiner cd to the ros package dlr_grasping:
     
@@ -147,7 +145,7 @@ Currently, the following environments are included inside this repository:
 </details>
 
 
-<details><summary>Adding new environments (click to expand)</summary>
+<details><summary>Adding new environments and training the agent (click to expand)</summary>
 To implement a new task / environment, the following steps are necessary:
   
   
@@ -160,61 +158,7 @@ To implement a new task / environment, the following steps are necessary:
   7. Start the training by executing: `ros2 run drl_grasping ex_train.bash` in the running container
 </details>
 
-<details><summary>Training New Agents (click to expand)</summary>
 
- ### Domain Randomization
-
-These environments can be wrapped by a randomizer in order to introduce domain randomization and improve generalization of the trained policies, which is especially beneficial for Sim2Real transfer.
-
-<p align="center" float="middle">
-  <img width="100.0%" src="https://github.com/AndrejOrsula/master_thesis/raw/media/graphics/implementation/domain_randomisation.png" alt="Examples of domain randomization for the Grasp task"/>
-</p>
-
-The included [ManipulationGazeboEnvRandomizer](drl_grasping/envs/randomizers/manipulation.py) allows randomization of the following properties at each reset of the environment.
-
-- Object model - primitive geometry
-  - Random type (box, sphere and cylinder are currently supported)
-  - Random color, scale, mass, friction
-- Object model - mesh geometry
-  - Random type (see [Object Model Database](#object-model-database)) 
-  - Random scale, mass, friction
-- Object pose
-- Ground plane texture
-- Initial robot configuration
-- Camera pose
-
-### Supported Robots
-
-Only [Franka Emika Panda](https://github.com/AndrejOrsula/panda_ign) is supported.
-
-
-## Reinforcement Learning
-
-This project makes direct use of [stable-baselines3](https://github.com/DLR-RM/stable-baselines3) as well as [sb3_contrib](https://github.com/Stable-Baselines-Team/stable-baselines3-contrib). Furthermore, scripts for training and evaluation are largely inspired by [rl-baselines3-zoo](https://github.com/DLR-RM/rl-baselines3-zoo).
-
-### Hyperparameters
-
-Hyperparameters for training of RL agents can be found in [hyperparams](hyperparams) directory. [Optuna](https://github.com/optuna/optuna) was used to autotune some of them, but certain algorithm/environment combinations require far more tuning (especially TD3). If needed, you can try running Optuna yourself, see [`ex_optimize`](examples/ex_optimize.bash) example.
-
-## Directory Structure
-
-```bash
-├── drl_grasping        # Primary Python module of this project
-    ├── algorithms      # Definitions of policies and slight modifications to RL algorithms
-    ├── envs            # Environments for grasping (compatible with OpenAI Gym)
-        ├── tasks       # Tasks for the agent that are identical for simulation
-        ├── randomizers # Domain randomization of the tasks, which also populates the world
-        └── models      # Functional models for the environment (Ignition Gazebo)
-    ├── control         # Control for the agent
-    ├── perception      # Perception for the agent
-    └── utils           # Other utilities, used across the module
-├── examples            # Examples for training and enjoying RL agents
-├── hyperparams         # Hyperparameters for training RL agents
-├── scripts             # Helpful scripts for training, evaluating, ... 
-├── launch              # ROS 2 launch scripts that can be used to help with setup
-├── docker              # Dockerfile for this project
-└── drl_grasping.repos  # List of other dependencies created for `drl_grasping`
-```
 ## Future Work
  From the author's point future work could focus on:
   
