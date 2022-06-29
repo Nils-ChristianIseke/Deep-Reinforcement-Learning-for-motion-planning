@@ -69,7 +69,7 @@ If you want to see what is going on , you need to uncomment 'model.env.render("h
 
 #### Continue Training on pretrained agents
 We are also providing some pretrained agent, those can be found in the training directories. If you want to use them you need to change the
-TRAINED_AGENT varibale in ex_train.bash. it shall point to one -zip file.
+TRAINED_AGENT varibale in ex_train.bash. it shall point to one .zip file.
 
 ## Environments
 
