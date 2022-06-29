@@ -361,7 +361,7 @@ register(
 IK_WO_MAX_EPISODE_STEPS: int = 100
 IK_WO_AGENT_RATE: float = 2.5
 IK_WO_PHYSICS_RATE: float = 250.0
-IK_WO_RTF: float = 100.0
+IK_WO_RTF: float = 1
 register(
     id='IK-WMMO-Gazebo-v0',
     entry_point='gym_ignition.runtimes.gazebo_runtime:GazeboRuntime',

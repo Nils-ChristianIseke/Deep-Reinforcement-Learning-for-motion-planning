@@ -32,7 +32,7 @@ ALGO="tqc"
 #ALGO="ppo"
 #ALGO="a2c"
 ## Path to trained agent (to continue training)
-TRAINED_AGENT=""${ENV_ID}"_17/rl_model_70000_steps.zip"
+TRAINED_AGENT=""${ENV_ID}"_21/rl_model_470000_steps.zip"
 
 ## Path to a replay buffer that should be preloaded before training begins
 # PRELOAD_REPLAY_BUFFER="training/preloaded_buffers/"${ENV_ID}"_1/replay_buffer.pkl"
