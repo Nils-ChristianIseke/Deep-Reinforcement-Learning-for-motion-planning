@@ -8,10 +8,13 @@ In our Extension of the fantastic work of [AndrejOrsula](https://github.com/Andr
   
   1. InverseKinematics
   2. InverseKinematicsWithObstacles
-  3. InverseKinematicsWithRandomObstacles
-  4. InverseKinematicsWithManyRandomObstcles
-  4. ReachWithObstacles
-
+  3. InverseKinematicsWithMovingObstacles
+  4. InverseKinematicsWithManyMovingObstacles
+  5. ReachWithObstacles
+  
+For a detailed explination of each task, go down to the environment section.
+The naming of the environments 3 and 4 is a bit misleading. MovingObstacle refers to the fact that the obstacles are randomly spawend at the beginning of each episode, but they are staying at the same position during the whole episode.
+  
 </details>
 The following animations are showing some results using the Panda robotic arm.
 <p align="left" float="middle">
@@ -62,13 +65,11 @@ One convinient way to edit the code e.g.: changing the reward function, or addin
 
 Take a look at the the Training of Agent section of the original repository [repository](https://github.com/AndrejOrsula/drl_grasping)
 
-If you want to see what is going on, you need to uncomment 'model.env.render("human")' in train.py (deepRLIK/scripts/train.py).
+If you want to see what is going on , you need to uncomment 'model.env.render("human")' in train.py (deepRLIK/scripts/train.py). To force the start of the simulation.
 
-```bash
-ros2 run drl_grasping ex_train.bash
-```
-  
-
+#### Continue Training on pretrained agents
+We are also providing some pretrained agent, those can be found in the training directories. If you want to use them you need to change the
+TRAINED_AGENT varibale in ex_train.bash. it shall point to one -zip file.
 
 ## Environments
 
@@ -90,12 +91,12 @@ We added the following enviroments, to the original repository:
     Environment: The environment contains the robotic arm, a randomly spawned goal point and an obstacle.
     Observation: Position of the goal point, the endeffector of the robotic arm and position + orientation of the obstacle
     Action: The joint angles of the robotic arm.
-  - [InverseKinematicsWithRandomObstacles](drl_grasping/envs/tasks/inverse_kinematics_with_obstacles.py)
+  - [InverseKinematicsWithMovingObstacles](drl_grasping/envs/tasks/inverse_kinematics_with_obstacles.py)
       -Description: The agents goal is to calculate the necessary joint angles of the robotic arm to reach a random goal point, while avoiding collisions with an obstacle
     Environment: The environment contains the robotic arm, a randomly spawned goal point and an obstacle.
     Observation: Position of the goal point, the endeffector of the robotic arm and position + orientation of the obstacle
     Action: The joint angles of the robotic arm.
-   [InverseKinematicsWithManyRandomObstacles](drl_grasping/envs/tasks/inverse_kinematics_with_obstacles.py)
+   [InverseKinematicsWithManyMovingObstacles](drl_grasping/envs/tasks/inverse_kinematics_with_obstacles.py)
       -Description: The agents goal is to calculate the necessary joint angles of the robotic arm to reach a random goal point, while avoiding collisions with an obstacle
     Environment: The environment contains the robotic arm, a randomly spawned goal point as well as a number of obstacles.
     Observation: Position of the goal point, the endeffector of the robotic arm and position + orientation of the obstacles
@@ -109,7 +110,7 @@ We added the following enviroments, to the original repository:
   
   
   
-  Inside the definition of each class some variables can be set, e.g.: For the InverseKinematicsWithRandomObstacles task. Especially important are the object, and obstacle related variables. For the newly implemented tasks the object and obstacle related variables (e.g.:_object_enable, _object_type, _object_dimension_volume, obstacle_type, etc.) define the properties of the goal point and the obstacle (where it is spawned, what it looks like etc.).  The standarts values are restricting the possible spawning volume of object and obstalce to a small volume. Thus keeping the observation space small. (Faster training). For a more general solution the spawning volume of both should be the same size as the workspace of the robot. 
+  Inside the definition of each class some variables can be set, e.g.: For the InverseKinematicsWithMovingObstacles task. Especially important are the object, and obstacle related variables. For the newly implemented tasks the object and obstacle related variables (e.g.:_object_enable, _object_type, _object_dimension_volume, obstacle_type, etc.) define the properties of the goal point and the obstacle (where it is spawned, what it looks like etc.).  The standarts values are restricting the possible spawning volume of object and obstalce to a small volume. Thus keeping the observation space small. (Faster training). For a more general solution the spawning volume of both should be the same size as the workspace of the robot. 
 </details>
 
 
@@ -130,8 +131,7 @@ To implement a new task / environment, the following steps are necessary:
 ## Future Work
  From the author's point future work could focus on:
   
-  - enlarging the spawning volume of obstacle and goal point
-  - Adding more than 1 obstacle
+  - enlarging the spawning volume of obstacle and goal point to the whole workspace
   - Adding moving obstacles and goal_points
   - Adding obstacles of complex shape
   - Comparing the RL-Learning Approach for path planning with classic approaches of path planning
