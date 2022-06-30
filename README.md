@@ -98,7 +98,7 @@ We added the following enviroments, to the original repository:
     Environment: The environment contains the robotic arm, a randomly spawned goal point and an obstacle.
     Observation: Position of the goal point, the endeffector of the robotic arm and position + orientation of the obstacle
     Action: The joint angles of the robotic arm.
-   [InverseKinematicsWithManyMovingObstacles](drl_grasping/envs/tasks/inverse_kinematics_with_obstacles.py)
+  - [InverseKinematicsWithManyMovingObstacles](drl_grasping/envs/tasks/inverse_kinematics_with_obstacles.py)
       -Description: The agents goal is to calculate the necessary joint angles of the robotic arm to reach a random goal point, while avoiding collisions with an obstacle
     Environment: The environment contains the robotic arm, a randomly spawned goal point as well as a number of obstacles.
     Observation: Position of the goal point, the endeffector of the robotic arm and position + orientation of the obstacles
