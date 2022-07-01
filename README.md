@@ -2,8 +2,7 @@
 This repository is an extesion of: [drl_grasping](https://github.com/AndrejOrsula/drl_grasping). Please read through the [README](https://github.com/AndrejOrsula/drl_grasping) of the original repo first! This is necessary to understand this README.
 We have deliberately chosen to focus this README only on the changes that we implemented.
 
-
-In our Extension of the fantastic work of [AndrejOrsula](https://github.com/AndrejOrsula) we added few new Environments:
+We added a few new Environments:
 <details><summary>Newly added Environments (click to expand)</summary>
   
   1. InverseKinematics
