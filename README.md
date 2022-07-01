@@ -76,6 +76,7 @@ Now you can start developing inside the container by:
       cd /root/drl_grasping/drl_grasping/src/drl_grasping
    ```
    Now you are at the root of the ROS-Package.
+   
    4. To start a training execute:
    
    ```bash
