@@ -36,7 +36,7 @@ Take a look at the the depenencies section of the original repository [repositor
 
 ### Docker Instructions
 1. Pull this repository.
-```git pull <link_to_repository>```
+```git pull https://github.com/Nils-ChristianIseke/deepRLIK.git```
 2. Get the docker image:
 3. docker pull slin25/rl_motion_planning
 
