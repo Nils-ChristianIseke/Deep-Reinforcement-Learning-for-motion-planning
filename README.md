@@ -50,9 +50,15 @@ sudo systemctl restart docker
 
 ### Docker Instructions
 1. Pull this repository.
-```git pull https://github.com/Nils-ChristianIseke/deepRLIK.git```
+
+```
+git pull https://github.com/Nils-ChristianIseke/deepRLIK.git
+```
+
 2. Get the docker image:
-```docker pull slin25/rl_motion_planning ```
+```
+docker pull slin25/rl_motion_planning 
+```
 
 Now you can start developing inside the container by:
   1.Starting the container,in a terminal and execute: 
@@ -61,6 +67,7 @@ Now you can start developing inside the container by:
       cd drl_grasping <path_to_the_cloned_repo>/docker
       sudo ./run.bash slin25/rl_motion_planning /bin/bash
    ```
+   
    Now you are inside the running container where you can, start the training.
   2. Optional (If you want to develop with VS Code): Connecting to the container as described [here](https://code.visualstudio.com/docs/remote/containers) See the steps provided below
   3. Inside the container cd to the ros package dlr_grasping:
