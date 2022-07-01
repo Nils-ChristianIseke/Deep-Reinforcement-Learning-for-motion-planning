@@ -26,39 +26,63 @@ Disclaimer: These instruction are based on the [original Repository](https://git
 
 ## Instructions
 
+Disclaimer: Those instructions were only tested for Ubuntu 22.04. If you get stuck please feel free to contact us.
+
 ### Requirements
-Take a look at the requirement section of the original [repository](https://github.com/AndrejOrsula/drl_grasping)
+Requirements
+
+    - OS: Any system that supports Docker should work (Linux, Windows, macOS).
+        Only Ubuntu 20.04 was tested.
+    - GPU: CUDA is required to process octree observations on GPU. Therefore, only Docker images with CUDA support are currently available, however, it should be possible to use the pre-built image even on systems without a dedicated GPU.
+
 
 ### Dependencies
-Take a look at the the depenencies section of the original repository [repository](https://github.com/AndrejOrsula/drl_grasping)
-
+```
+# Docker
+curl https://get.docker.com | sh \
+  && sudo systemctl --now enable docker
+# Nvidia Docker
+distribution=$(. /etc/os-release; echo $ID$VERSION_ID) \
+  && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \
+  && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+sudo apt-get update && sudo apt-get install -y nvidia-docker2
+sudo systemctl restart docker
+```
 
 ### Docker Instructions
 1. Pull this repository.
 ```git pull https://github.com/Nils-ChristianIseke/deepRLIK.git```
 2. Get the docker image:
-3. docker pull slin25/rl_motion_planning
+```docker pull slin25/rl_motion_planning ```
 
-#### VS CODE Remote Containers
-One convinient way to edit the code e.g.: changing the reward function, or adding new tasks, is by connecting VS-Code to the container:
-  1. Install [VS Code](https://code.visualstudio.com/download)
-  2. Install the VS Code Extension [Remote Containers](https://code.visualstudio.com/docs/remote/containers)
-
-  Now you can start developing inside the container by:
-  1. Starting the container: 
+Now you can start developing inside the container by:
+  1.Starting the container,in a terminal and execute: 
     
   ```bash
-      cd drl_grasping dir/docker
+      cd drl_grasping <path_to_the_cloned_repo>/docker
       sudo ./run.bash slin25/rl_motion_planning /bin/bash
    ```
-
-  2. Connecting to the container as described [here](https://code.visualstudio.com/docs/remote/containers)
-  3. inside the condatiner cd to the ros package dlr_grasping:
+   Now you are inside the running container where you can, start the training.
+  2. Optional (If you want to develop with VS Code): Connecting to the container as described [here](https://code.visualstudio.com/docs/remote/containers) See the steps provided below
+  3. Inside the container cd to the ros package dlr_grasping:
     
   ```bash
       cd /root/drl_grasping/drl_grasping/src/drl_grasping
    ```
    Now you are at the root of the ROS-Package.
+   4. To start a training execute:
+    ```bash
+      ros2 run drl_grasping ex_train.bash
+   ```
+   This will start a training, which by default is using a pretrained agent (TQC). If you want to see the simulation, prior to starting the training you need to uncomment the line  'model.env.render("human")' in train.py (deepRLIK/scripts/train.py).
+
+#### VS CODE Remote Containers
+One convinient way to edit the code e.g.: changing the reward function, or adding new tasks, is by connecting VS-Code to the container:
+  1. Install [VS Code](https://code.visualstudio.com/download)
+  2. Install the VS Code Extension [Remote Containers](https://code.visualstudio.com/docs/remote/containers)
+  3. To connect to a running container, follow the steps provided [here](https://code.visualstudio.com/docs/remote/containers)
+
+ 
    
 
 
