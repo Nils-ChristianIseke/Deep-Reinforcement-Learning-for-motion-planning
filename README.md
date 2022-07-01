@@ -77,9 +77,11 @@ Now you can start developing inside the container by:
    ```
    Now you are at the root of the ROS-Package.
    4. To start a training execute:
-    ```bash
+   
+   ```bash
       ros2 run drl_grasping ex_train.bash
    ```
+   
    This will start a training, which by default is using a pretrained agent (TQC). If you want to see the simulation, prior to starting the training you need to uncomment the line  'model.env.render("human")' in train.py (deepRLIK/scripts/train.py).
 
 #### VS CODE Remote Containers
