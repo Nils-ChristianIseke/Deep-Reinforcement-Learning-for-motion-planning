@@ -29,7 +29,6 @@ Disclaimer: These instruction are based on the [original Repository](https://git
 Disclaimer: Those instructions were only tested for Ubuntu 22.04. If you get stuck please feel free to contact us.
 
 ### Requirements
-Requirements
 
  - OS: Any system that supports Docker should work (Linux, Windows, macOS).
         Only Ubuntu 22.04 was tested.
