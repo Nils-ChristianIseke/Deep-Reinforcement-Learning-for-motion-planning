@@ -22,7 +22,7 @@ The following animations are showing some results using the Panda robotic arm.
     <img width="80.0%" src="https://github.com/Nils-ChristianIseke/deepRLIK/blob/main/gifs/IKWMMO_470000_TQC.gif" alt="Evaluation of a trained policy on the InverseKinematicTaskWithRandomObstacles"/>
 </p>
 
-Disclaimer: These instruction are based on the [original Repository](https://github.com/AndrejOrsula) and were adjusted to the Extension we are providing.
+Disclaimer: The following instructions are based on the [original Repository](https://github.com/AndrejOrsula) and were adjusted to the extensions we are providing.
 
 ## Instructions
 
