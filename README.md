@@ -31,9 +31,9 @@ Disclaimer: Those instructions were only tested for Ubuntu 22.04. If you get stu
 ### Requirements
 Requirements
 
-    - OS: Any system that supports Docker should work (Linux, Windows, macOS).
-        Only Ubuntu 20.04 was tested.
-    - GPU: CUDA is required to process octree observations on GPU. Therefore, only Docker images with CUDA support are currently available, however, it should be possible to use the pre-built image even on systems without a dedicated GPU.
+ - OS: Any system that supports Docker should work (Linux, Windows, macOS).
+        Only Ubuntu 22.04 was tested.
+ - GPU: CUDA is required.
 
 
 ### Dependencies
